@@ -1,24 +1,28 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using OrganizasyonSitesi.Models;
+using OrganizasyonSitesi.Models.ViewModels;
+using OrganizasyonSitesi.Services;
 
 namespace OrganizasyonSitesi.Controllers;
 
 public class HomeController : Controller
 {
-    public IActionResult Index()
+    private readonly IHizmetService _hizmetService;
+
+    public HomeController(IHizmetService hizmetService)
     {
-        return View();
+        _hizmetService = hizmetService;
     }
 
-    public IActionResult Privacy()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var model = new AnasayfaViewModel
+        {
+            Hizmetler = await _hizmetService.AktifHizmetleriGetirAsync(),
+            Referanslar = await _hizmetService.AktifReferanslariGetirAsync()
+        };
+
+        return View(model);
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
+    public IActionResult Privacy() => View();
 }

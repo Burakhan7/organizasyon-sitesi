@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OrganizasyonSitesi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8e1bcaaa8b59c1d3f6862bb48578892296f81ac5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+63b7608006384c06a1dc53b42c554bd71bb5b003")]
 [assembly: System.Reflection.AssemblyProductAttribute("OrganizasyonSitesi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OrganizasyonSitesi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

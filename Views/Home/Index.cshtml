@@ -1,8 +1,42 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model OrganizasyonSitesi.Models.ViewModels.AnasayfaViewModel
+
+@{
+    ViewData["Title"] = "Ana Sayfa";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="text-center py-5">
+    <h1 class="display-4">Hayalinizdeki Etkinlik, Bizim İşimiz</h1>
+    <p class="lead">Kurumsal etkinliklerden düğünlere, her organizasyonda yanınızdayız.</p>
+</section>
+
+<section class="py-4">
+    <h2 class="mb-4">Hizmetlerimiz</h2>
+    <div class="row">
+        @foreach (var hizmet in Model.Hizmetler)
+        {
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@hizmet.Baslik</h5>
+                        <p class="card-text">@hizmet.Aciklama</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<section class="py-4">
+    <h2 class="mb-4">Müşterilerimiz Ne Diyor?</h2>
+    <div class="row">
+        @foreach (var referans in Model.Referanslar)
+        {
+            <div class="col-md-4 mb-4">
+                <blockquote class="blockquote">
+                    <p>"@referans.Yorum"</p>
+                    <footer class="blockquote-footer">@referans.MusteriAdi</footer>
+                </blockquote>
+            </div>
+        }
+    </div>
+</section>
