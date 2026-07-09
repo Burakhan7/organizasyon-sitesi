@@ -12,7 +12,7 @@ using OrganizasyonSitesi.Data;
 namespace OrganizasyonSitesi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260709071827_SeedDataEklendi")]
+    [Migration("20260709184256_SeedDataEklendi")]
     partial class SeedDataEklendi
     {
         /// <inheritdoc />
@@ -56,6 +56,40 @@ namespace OrganizasyonSitesi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Hizmetler");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Aciklama = "Lansman, bayi toplantısı, gala gecesi ve şirket organizasyonlarında uçtan uca planlama.",
+                            AktifMi = true,
+                            Baslik = "Kurumsal Etkinlikler",
+                            SiraNo = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Aciklama = "Nişandan kına gecesine, salon süslemesinden orkestraya hayalinizdeki düğünü kurgular, siz sadece anın tadını çıkarırsınız.",
+                            AktifMi = true,
+                            Baslik = "Düğün Organizasyonu",
+                            SiraNo = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Aciklama = "Sahne kurulumu, ses-ışık sistemleri, sanatçı yönetimi ve güvenlik koordinasyonu dahil büyük ölçekli etkinlik yönetimi.",
+                            AktifMi = true,
+                            Baslik = "Festival ve Konser",
+                            SiraNo = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Aciklama = "Mağaza açılışı, ürün lansmanı ve basın etkinliklerinde markanızı en doğru şekilde sahneye koyuyoruz.",
+                            AktifMi = true,
+                            Baslik = "Açılış ve Lansman",
+                            SiraNo = 4
+                        });
                 });
 
             modelBuilder.Entity("OrganizasyonSitesi.Models.Entities.IletisimMesaji", b =>
@@ -127,6 +161,29 @@ namespace OrganizasyonSitesi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Referanslar");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AktifMi = true,
+                            MusteriAdi = "Yılmaz Holding",
+                            Yorum = "Bayi toplantımız kusursuz geçti, her detay düşünülmüştü."
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AktifMi = true,
+                            MusteriAdi = "Elif & Mert",
+                            Yorum = "Düğünümüz hayal ettiğimizden de güzeldi, iyi ki sizi seçmişiz!"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AktifMi = true,
+                            MusteriAdi = "TechNova Yazılım",
+                            Yorum = "Ürün lansmanımızda basın ve konuk yönetimi profesyonelceydi."
+                        });
                 });
 #pragma warning restore 612, 618
         }
