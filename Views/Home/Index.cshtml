@@ -4,39 +4,44 @@
     ViewData["Title"] = "Ana Sayfa";
 }
 
-<section class="text-center py-5">
-    <h1 class="display-4">Hayalinizdeki Etkinlik, Bizim İşimiz</h1>
-    <p class="lead">Kurumsal etkinliklerden düğünlere, her organizasyonda yanınızdayız.</p>
+<section class="hero">
+    <h1>Hayalinizdeki Etkinlik, Bizim İşimiz</h1>
+    <p>Kurumsal lansmanlardan düğünlere, festivallerden açılışlara — planlamayı bize bırakın, siz anın tadını çıkarın.</p>
+    <a class="btn btn-altin" asp-controller="Iletisim" asp-action="Index">Teklif Alın</a>
 </section>
 
-<section class="py-4">
-    <h2 class="mb-4">Hizmetlerimiz</h2>
-    <div class="row">
-        @foreach (var hizmet in Model.Hizmetler)
-        {
-            <div class="col-md-6 col-lg-3 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">@hizmet.Baslik</h5>
-                        <p class="card-text">@hizmet.Aciklama</p>
+<section class="bolum">
+    <div class="container">
+        <h2>Hizmetlerimiz</h2>
+        <p class="bolum-alt">Her ölçekte organizasyon için uçtan uca çözüm</p>
+        <div class="row g-4">
+            @foreach (var hizmet in Model.Hizmetler)
+            {
+                <div class="col-md-6 col-lg-3">
+                    <div class="hizmet-kart">
+                        <h5>@hizmet.Baslik</h5>
+                        <p>@hizmet.Aciklama</p>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 </section>
 
-<section class="py-4">
-    <h2 class="mb-4">Müşterilerimiz Ne Diyor?</h2>
-    <div class="row">
-        @foreach (var referans in Model.Referanslar)
-        {
-            <div class="col-md-4 mb-4">
-                <blockquote class="blockquote">
-                    <p>"@referans.Yorum"</p>
-                    <footer class="blockquote-footer">@referans.MusteriAdi</footer>
-                </blockquote>
-            </div>
-        }
+<section class="bolum referans-bolumu">
+    <div class="container">
+        <h2>Müşterilerimiz Ne Diyor?</h2>
+        <p class="bolum-alt">Bizi en iyi onlar anlatır</p>
+        <div class="row g-4">
+            @foreach (var referans in Model.Referanslar)
+            {
+                <div class="col-md-4">
+                    <div class="referans-kart">
+                        <p>"@referans.Yorum"</p>
+                        <footer>— @referans.MusteriAdi</footer>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
 </section>

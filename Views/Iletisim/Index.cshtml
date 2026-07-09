@@ -4,52 +4,65 @@
     ViewData["Title"] = "Ýletiþim";
 }
 
-<h1 class="mb-4">Bize Ulaþýn</h1>
+<section class="sayfa-baslik">
+    <h1>Bize Ulaþýn</h1>
+    <p>Etkinliðinizi anlatýn, 24 saat içinde size dönelim.</p>
+</section>
 
-@if (TempData["Basarili"] != null)
-{
-    <div class="alert alert-success">@TempData["Basarili"]</div>
-}
+<section class="bolum">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
 
-<form asp-action="Index" method="post" class="col-md-8">
-    <div class="mb-3">
-        <label asp-for="AdSoyad" class="form-label"></label>
-        <input asp-for="AdSoyad" class="form-control" />
-        <span asp-validation-for="AdSoyad" class="text-danger"></span>
+                @if (TempData["Basarili"] != null)
+                {
+                    <div class="alert alert-success">@TempData["Basarili"]</div>
+                }
+
+                <form asp-action="Index" method="post" class="iletisim-form">
+                    <div class="mb-3">
+                        <label asp-for="AdSoyad" class="form-label"></label>
+                        <input asp-for="AdSoyad" class="form-control" />
+                        <span asp-validation-for="AdSoyad" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Telefon" class="form-label"></label>
+                        <input asp-for="Telefon" class="form-control" />
+                        <span asp-validation-for="Telefon" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="EtkinlikTuru" class="form-label"></label>
+                        <select asp-for="EtkinlikTuru" class="form-select">
+                            <option value="">Seçiniz...</option>
+                            <option>Kurumsal Etkinlik</option>
+                            <option>Düðün</option>
+                            <option>Festival / Konser</option>
+                            <option>Açýlýþ / Lansman</option>
+                            <option>Diðer</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Mesaj" class="form-label"></label>
+                        <textarea asp-for="Mesaj" class="form-control" rows="5"></textarea>
+                        <span asp-validation-for="Mesaj" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary px-4">Gönder</button>
+                </form>
+
+            </div>
+        </div>
     </div>
-
-    <div class="mb-3">
-        <label asp-for="Email" class="form-label"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Telefon" class="form-label"></label>
-        <input asp-for="Telefon" class="form-control" />
-        <span asp-validation-for="Telefon" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="EtkinlikTuru" class="form-label"></label>
-        <select asp-for="EtkinlikTuru" class="form-select">
-            <option value="">Seçiniz...</option>
-            <option>Kurumsal Etkinlik</option>
-            <option>Düðün</option>
-            <option>Festival / Konser</option>
-            <option>Açýlýþ / Lansman</option>
-            <option>Diðer</option>
-        </select>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Mesaj" class="form-label"></label>
-        <textarea asp-for="Mesaj" class="form-control" rows="5"></textarea>
-        <span asp-validation-for="Mesaj" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Gönder</button>
-</form>
+</section>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
