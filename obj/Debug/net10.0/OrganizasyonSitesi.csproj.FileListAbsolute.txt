@@ -223,3 +223,9 @@ C:\Users\Burakhan\Desktop\organizasyon\OrganizasyonSitesi\obj\Debug\net10.0\Orga
 C:\Users\Burakhan\Desktop\organizasyon\OrganizasyonSitesi\obj\Debug\net10.0\OrganizasyonSitesi.sourcelink.json
 C:\Users\Burakhan\Desktop\organizasyon\OrganizasyonSitesi\obj\Debug\net10.0\Organiza.C31FA61C.Up2Date
 C:\Users\Burakhan\Desktop\organizasyon\OrganizasyonSitesi\obj\Debug\net10.0\compressed\p73vr8n8qk-{0}-myim15ztws-myim15ztws.gz
+C:\Users\Burakhan\Desktop\organizasyon\OrganizasyonSitesi\bin\Debug\net10.0\yayin\web.config
+C:\Users\Burakhan\Desktop\organizasyon\OrganizasyonSitesi\bin\Debug\net10.0\yayin\appsettings.Development.json
+C:\Users\Burakhan\Desktop\organizasyon\OrganizasyonSitesi\bin\Debug\net10.0\yayin\appsettings.json
+C:\Users\Burakhan\Desktop\organizasyon\OrganizasyonSitesi\bin\Debug\net10.0\yayin\OrganizasyonSitesi.deps.json
+C:\Users\Burakhan\Desktop\organizasyon\OrganizasyonSitesi\bin\Debug\net10.0\yayin\OrganizasyonSitesi.runtimeconfig.json
+C:\Users\Burakhan\Desktop\organizasyon\OrganizasyonSitesi\bin\Debug\net10.0\yayin\OrganizasyonSitesi.staticwebassets.endpoints.json

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OrganizasyonSitesi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3e215c69be6bb784325f99d7486496ec306800f1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+582e79474388fdc36177200c4fd70f796db84fbe")]
 [assembly: System.Reflection.AssemblyProductAttribute("OrganizasyonSitesi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OrganizasyonSitesi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
