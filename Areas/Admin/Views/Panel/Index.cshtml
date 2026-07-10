@@ -1,0 +1,34 @@
+﻿@model PanelOzetViewModel
+
+@{
+    ViewData["Title"] = "Panel";
+}
+
+<div class="container-fluid px-4 py-4">
+    <h1 class="mb-1">Yönetim Paneli</h1>
+    <p class="text-muted mb-4">Hoş geldin, @User.Identity?.Name</p>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="ozet-kart @(Model.OkunmamisMesaj > 0 ? "ozet-dikkat" : "")">
+                <div class="ozet-sayi">@Model.OkunmamisMesaj</div>
+                <div class="ozet-etiket">Okunmamış Mesaj</div>
+                <div class="ozet-alt">Toplam @Model.ToplamMesaj mesaj</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="ozet-kart">
+                <div class="ozet-sayi">@Model.YayindakiEtkinlik</div>
+                <div class="ozet-etiket">Yayındaki Etkinlik</div>
+                <div class="ozet-alt">Toplam @Model.ToplamEtkinlik etkinlik</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="ozet-kart">
+                <div class="ozet-sayi">@Model.AktifHizmet</div>
+                <div class="ozet-etiket">Aktif Hizmet</div>
+                <div class="ozet-alt">@Model.AktifReferans aktif referans</div>
+            </div>
+        </div>
+    </div>
+</div>

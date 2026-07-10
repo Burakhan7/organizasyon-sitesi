@@ -1,0 +1,49 @@
+﻿@model List<OrganizasyonSitesi.Models.Entities.IletisimMesaji>
+
+@{
+    ViewData["Title"] = "Mesajlar";
+}
+
+<div class="container-fluid px-4 py-4">
+    <h1 class="mb-4">Gelen Mesajlar</h1>
+
+    @if (!Model.Any())
+    {
+        <p class="text-muted">Henüz mesaj yok.</p>
+    }
+    else
+    {
+        <div class="mesaj-listesi">
+            @foreach (var mesaj in Model)
+            {
+                <div class="mesaj-kart @(mesaj.OkunduMu ? "" : "mesaj-yeni")">
+                    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                        <div>
+                            <strong>@mesaj.AdSoyad</strong>
+                            @if (!mesaj.OkunduMu)
+                            {
+                                <span class="badge-yeni">YENİ</span>
+                            }
+                            <div class="mesaj-meta">
+                                @mesaj.Email
+                                @if (!string.IsNullOrEmpty(mesaj.Telefon)) { <text> · @mesaj.Telefon</text> }
+                                @if (!string.IsNullOrEmpty(mesaj.EtkinlikTuru)) { <text> · @mesaj.EtkinlikTuru</text> }
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <div class="mesaj-meta">@mesaj.KayitTarihi.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</div>
+                            <form asp-action="OkunduIsaretle" method="post" class="d-inline">
+                                <input type="hidden" name="id" value="@mesaj.Id" />
+                                <input type="hidden" name="okundu" value="@(!mesaj.OkunduMu)" />
+                                <button type="submit" class="btn btn-sm @(mesaj.OkunduMu ? "btn-outline-secondary" : "btn-primary") mt-1">
+                                    @(mesaj.OkunduMu ? "Okunmadı yap" : "Okundu")
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <p class="mesaj-icerik">@mesaj.Mesaj</p>
+                </div>
+            }
+        </div>
+    }
+</div>

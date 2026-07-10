@@ -54,11 +54,6 @@ public class AdminController : Controller
         return View(model);
     }
 
-    [Authorize]
-    public IActionResult Panel()
-    {
-        return View();
-    }
 
     [Authorize]
     [HttpPost]
@@ -67,5 +62,11 @@ public class AdminController : Controller
     {
         await _signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home");
+    }
+
+    [Authorize]
+    public IActionResult Panel()
+    {
+        return RedirectToAction("Index", "Panel", new { area = "Admin" });
     }
 }

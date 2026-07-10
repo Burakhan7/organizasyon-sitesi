@@ -1,4 +1,4 @@
-:root {
+ï»¿:root {
   --gece: #1C1B2E;
   --gece-koyu: #141320;
   --altin: #D9A441;
@@ -86,7 +86,7 @@ h1, h2, h3, .navbar-brand {
 
 .hero .btn-altin:hover { background-color: var(--altin-acik); }
 
-/* ---- Bölümler ---- */
+/* ---- BÃ¶lÃ¼mler ---- */
 .bolum { padding: 4rem 0; }
 
 .bolum h2 {
@@ -100,7 +100,7 @@ h1, h2, h3, .navbar-brand {
   margin-bottom: 3rem;
 }
 
-/* ---- Hizmet kartlarý ---- */
+/* ---- Hizmet kartlarÄ± ---- */
 .hizmet-kart {
   background: #fff;
   border: none;
@@ -181,7 +181,7 @@ h1, h2, h3, .navbar-brand {
   font-size: 1.1rem;
 }
 
-/* ---- Sayfa baþlýðý (iç sayfalar) ---- */
+/* ---- Sayfa baÅŸlÄ±ÄŸÄ± (iÃ§ sayfalar) ---- */
 .sayfa-baslik {
   background-color: var(--gece);
   background-image: radial-gradient(ellipse at 50% 0%, rgba(217, 164, 65, 0.18), transparent 60%);
@@ -195,11 +195,67 @@ h1, h2, h3, .navbar-brand {
   margin: 0;
 }
 
-/* ---- Ýletiþim formu kartý ---- */
+/* ---- Ä°letiÅŸim formu kartÄ± ---- */
 .iletisim-form {
   background: #fff;
   border-radius: 0.5rem;
   border-top: 3px solid var(--altin);
   padding: 2rem;
   box-shadow: 0 2px 12px rgba(28, 27, 46, 0.06);
+}
+
+/* ---- Admin ---- */
+.admin-body { background-color: #F2F0EA; }
+
+.admin-icerik { min-height: calc(100vh - 140px); }
+
+.ozet-kart {
+  background: #fff;
+  border-radius: 0.5rem;
+  border-left: 4px solid var(--gece);
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(28, 27, 46, 0.06);
+}
+
+.ozet-dikkat { border-left-color: var(--altin); }
+
+.ozet-sayi {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--gece);
+  line-height: 1;
+}
+
+.ozet-etiket { font-weight: 700; margin-top: 0.5rem; }
+
+.ozet-alt { color: var(--metin-soluk); font-size: 0.9rem; }
+
+/* ---- Mesaj listesi ---- */
+.mesaj-kart {
+  background: #fff;
+  border-radius: 0.5rem;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 12px rgba(28, 27, 46, 0.06);
+  border-left: 4px solid transparent;
+}
+
+.mesaj-yeni { border-left-color: var(--altin); }
+
+.badge-yeni {
+  background: var(--altin);
+  color: var(--gece-koyu);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 1rem;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+.mesaj-meta { color: var(--metin-soluk); font-size: 0.88rem; }
+
+.mesaj-icerik {
+  margin: 0.75rem 0 0;
+  white-space: pre-line;   /* kullanÄ±cÄ±nÄ±n satÄ±r sonlarÄ±nÄ± koru */
 }
