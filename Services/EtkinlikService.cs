@@ -176,7 +176,7 @@ public class EtkinlikService : IEtkinlikService
         {
             // --- Validasyon zinciri ---
             var uzanti = Path.GetExtension(dosya.FileName).ToLowerInvariant();
-
+            if (uzanti == ".jpeg") uzanti = ".jpg";   // .jpeg'i .jpg'ye normalize et
             if (!IzinliUzantilar.Contains(uzanti))
             {
                 hatalar.Add($"{dosya.FileName}: izin verilmeyen dosya türü.");
