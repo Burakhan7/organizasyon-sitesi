@@ -54,6 +54,7 @@
                             </td>
                             <td class="text-end">
                                 <a asp-action="Duzenle" asp-route-id="@e.Id" class="btn btn-sm btn-outline-secondary">Düzenle</a>
+                                <a asp-action="Fotograflar" asp-route-id="@e.Id" class="btn btn-sm btn-outline-secondary">Fotoğraflar</a>
                                 <form asp-action="Sil" asp-route-id="@e.Id" method="post" class="d-inline"
                                       onsubmit="return confirm('Bu etkinlik ve tüm fotoğrafları silinecek. Emin misiniz?');">
                                     <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
