@@ -229,3 +229,4 @@ C:\Users\Burakhan\Desktop\organizasyon\OrganizasyonSitesi\bin\Debug\net10.0\yayi
 C:\Users\Burakhan\Desktop\organizasyon\OrganizasyonSitesi\bin\Debug\net10.0\yayin\OrganizasyonSitesi.deps.json
 C:\Users\Burakhan\Desktop\organizasyon\OrganizasyonSitesi\bin\Debug\net10.0\yayin\OrganizasyonSitesi.runtimeconfig.json
 C:\Users\Burakhan\Desktop\organizasyon\OrganizasyonSitesi\bin\Debug\net10.0\yayin\OrganizasyonSitesi.staticwebassets.endpoints.json
+C:\Users\Burakhan\Desktop\organizasyon\OrganizasyonSitesi\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
