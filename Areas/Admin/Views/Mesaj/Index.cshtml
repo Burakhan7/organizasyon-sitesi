@@ -34,7 +34,7 @@
                             <div class="mesaj-meta">@mesaj.KayitTarihi.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</div>
                             <form asp-action="OkunduIsaretle" method="post" class="d-inline">
                                 <input type="hidden" name="id" value="@mesaj.Id" />
-                                <input type="hidden" name="okundu" value="@(!mesaj.OkunduMu)" />
+                                <input type="hidden" name="okundu" value="@((!mesaj.OkunduMu).ToString())" />
                                 <button type="submit" class="btn btn-sm @(mesaj.OkunduMu ? "btn-outline-secondary" : "btn-primary") mt-1">
                                     @(mesaj.OkunduMu ? "Okunmadı yap" : "Okundu")
                                 </button>
