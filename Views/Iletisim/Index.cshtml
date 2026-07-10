@@ -1,12 +1,12 @@
-@model OrganizasyonSitesi.Models.ViewModels.IletisimFormViewModel
+ï»¿@model OrganizasyonSitesi.Models.ViewModels.IletisimFormViewModel
 
 @{
-    ViewData["Title"] = "Ýletiþim";
+    ViewData["Title"] = "Ä°letiÅŸim";
 }
 
 <section class="sayfa-baslik">
-    <h1>Bize Ulaþýn</h1>
-    <p>Etkinliðinizi anlatýn, 24 saat içinde size dönelim.</p>
+    <h1>Bize UlaÅŸÄ±n</h1>
+    <p>EtkinliÄŸinizi anlatÄ±n, 24 saat iÃ§inde size dÃ¶nelim.</p>
 </section>
 
 <section class="bolum">
@@ -41,12 +41,12 @@
                     <div class="mb-3">
                         <label asp-for="EtkinlikTuru" class="form-label"></label>
                         <select asp-for="EtkinlikTuru" class="form-select">
-                            <option value="">Seçiniz...</option>
+                            <option value="">SeÃ§iniz...</option>
                             <option>Kurumsal Etkinlik</option>
-                            <option>Düðün</option>
+                            <option>DÃ¼ÄŸÃ¼n</option>
                             <option>Festival / Konser</option>
-                            <option>Açýlýþ / Lansman</option>
-                            <option>Diðer</option>
+                            <option>AÃ§Ä±lÄ±ÅŸ / Lansman</option>
+                            <option>DiÄŸer</option>
                         </select>
                     </div>
 
@@ -54,9 +54,9 @@
                         <label asp-for="Mesaj" class="form-label"></label>
                         <textarea asp-for="Mesaj" class="form-control" rows="5"></textarea>
                         <span asp-validation-for="Mesaj" class="text-danger"></span>
-                    </div>
+                    </div> 
 
-                    <button type="submit" class="btn btn-primary px-4">Gönder</button>
+                    <button type="submit" class="btn btn-primary px-4">GÃ¶nder</button>
                 </form>
 
             </div>

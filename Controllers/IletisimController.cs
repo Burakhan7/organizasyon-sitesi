@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+ï»¿using Microsoft.AspNetCore.Mvc;
 using OrganizasyonSitesi.Models.Entities;
 using OrganizasyonSitesi.Models.ViewModels;
 using OrganizasyonSitesi.Services;
@@ -28,7 +28,7 @@ public class IletisimController : Controller
 		{
 			return View(form);
 		}
-
+		 
 		var mesaj = new IletisimMesaji
 		{
 			AdSoyad = form.AdSoyad,
@@ -40,7 +40,7 @@ public class IletisimController : Controller
 
 		await _hizmetService.IletisimMesajiKaydetAsync(mesaj);
 
-		TempData["Basarili"] = "Mesajýnýz alýndý! En kýsa sürede size dönüþ yapacaðýz.";
+		TempData["Basarili"] = "MesajÄ±nÄ±z alÄ±ndÄ±! En kÄ±sa sÃ¼rede size dÃ¶nÃ¼ÅŸ yapacaÄŸÄ±z.";
 		return RedirectToAction(nameof(Index));
 	}
 }

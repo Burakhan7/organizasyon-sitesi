@@ -1,16 +1,16 @@
-using System.ComponentModel.DataAnnotations;
+ï»¿using System.ComponentModel.DataAnnotations;
 
 namespace OrganizasyonSitesi.Models.ViewModels;
 
 public class IletisimFormViewModel
 {
-    [Required(ErrorMessage = "Adınızı girmeniz gerekiyor.")]
+    [Required(ErrorMessage = "AdÄ±nÄ±zÄ± girmeniz gerekiyor.")]
     [MaxLength(100)]
     [Display(Name = "Ad Soyad")]
     public string AdSoyad { get; set; } = string.Empty;
-
+     
     [Required(ErrorMessage = "E-posta adresi zorunlu.")]
-    [EmailAddress(ErrorMessage = "Geçerli bir e-posta girin.")]
+    [EmailAddress(ErrorMessage = "GeÃ§erli bir e-posta girin.")]
     [MaxLength(150)]
     [Display(Name = "E-posta")]
     public string Email { get; set; } = string.Empty;
@@ -20,11 +20,11 @@ public class IletisimFormViewModel
     public string? Telefon { get; set; }
 
     [MaxLength(100)]
-    [Display(Name = "Etkinlik Türü")]
+    [Display(Name = "Etkinlik TÃ¼rÃ¼")]
     public string? EtkinlikTuru { get; set; }
 
-    [Required(ErrorMessage = "Mesajınızı yazın.")]
+    [Required(ErrorMessage = "MesajÄ±nÄ±zÄ± yazÄ±n.")]
     [MaxLength(2000)]
-    [Display(Name = "Mesajınız")]
+    [Display(Name = "MesajÄ±nÄ±z")]
     public string Mesaj { get; set; } = string.Empty;
 }
