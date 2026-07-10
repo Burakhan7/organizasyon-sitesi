@@ -1,0 +1,20 @@
+﻿@model EtkinlikFormViewModel
+
+@{
+    ViewData["Title"] = "Yeni Etkinlik";
+}
+
+<div class="container-fluid px-4 py-4">
+    <h1 class="mb-4">Yeni Etkinlik</h1>
+    <div class="col-lg-8">
+        <form asp-action="Ekle" method="post" class="iletisim-form">
+            <partial name="_EtkinlikForm" model="Model" />
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Vazgeç</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

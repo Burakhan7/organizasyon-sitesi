@@ -29,6 +29,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 builder.Services.AddScoped<IHizmetService, HizmetService>();
+builder.Services.AddScoped<IEtkinlikService, EtkinlikService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -82,5 +83,7 @@ using (var scope = app.Services.CreateScope())
         }
     }
 }
+
+
 
 app.Run();

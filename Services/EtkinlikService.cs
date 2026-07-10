@@ -1,0 +1,127 @@
+﻿using Microsoft.EntityFrameworkCore;
+using OrganizasyonSitesi.Data;
+using OrganizasyonSitesi.Models.Entities;
+using OrganizasyonSitesi.Models.ViewModels;
+
+namespace OrganizasyonSitesi.Services;
+
+public class EtkinlikService : IEtkinlikService
+{
+    private readonly AppDbContext _context;
+
+    public EtkinlikService(AppDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<List<Etkinlik>> TumunuGetirAsync()
+    {
+        return await _context.Etkinlikler
+            .Include(e => e.Hizmet)                 // ilişkili hizmeti de getir
+            .OrderByDescending(e => e.Tarih)
+            .AsNoTracking()
+            .ToListAsync();
+    }
+
+    public async Task<Etkinlik?> GetirAsync(int id)
+    {
+        return await _context.Etkinlikler
+            .Include(e => e.Fotograflar)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Id == id);
+    }
+
+    public async Task EkleAsync(EtkinlikFormViewModel form)
+    {
+        var etkinlik = new Etkinlik
+        {
+            Baslik = form.Baslik,
+            Slug = await BenzersizSlugUretAsync(form.Baslik),
+            Aciklama = form.Aciklama,
+            Mekan = form.Mekan,
+            Tarih = form.Tarih,
+            HizmetId = form.HizmetId,
+            YayindaMi = form.YayindaMi
+        };
+
+        _context.Etkinlikler.Add(etkinlik);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task GuncelleAsync(EtkinlikFormViewModel form)
+    {
+        var etkinlik = await _context.Etkinlikler.FindAsync(form.Id);
+        if (etkinlik == null) return;
+
+        // Başlık değiştiyse slug'ı da yenile
+        if (etkinlik.Baslik != form.Baslik)
+            etkinlik.Slug = await BenzersizSlugUretAsync(form.Baslik, form.Id);
+
+        etkinlik.Baslik = form.Baslik;
+        etkinlik.Aciklama = form.Aciklama;
+        etkinlik.Mekan = form.Mekan;
+        etkinlik.Tarih = form.Tarih;
+        etkinlik.HizmetId = form.HizmetId;
+        etkinlik.YayindaMi = form.YayindaMi;
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task SilAsync(int id)
+    {
+        var etkinlik = await _context.Etkinlikler.FindAsync(id);
+        if (etkinlik == null) return;
+
+        _context.Etkinlikler.Remove(etkinlik);
+        await _context.SaveChangesAsync();   // cascade: fotoğraf kayıtları da gider
+    }
+
+    // --- Yardımcılar ---
+
+    private async Task<string> BenzersizSlugUretAsync(string baslik, int? haricId = null)
+    {
+        var slug = SlugUret(baslik);
+        var aday = slug;
+        var sayac = 2;
+
+        // Aynı slug varsa sonuna -2, -3... ekle
+        while (await _context.Etkinlikler.AnyAsync(e => e.Slug == aday && e.Id != haricId))
+        {
+            aday = $"{slug}-{sayac}";
+            sayac++;
+        }
+
+        return aday;
+    }
+
+    private static string SlugUret(string metin)
+    {
+        var harita = new Dictionary<char, char>
+        {
+            ['ç'] = 'c',
+            ['ğ'] = 'g',
+            ['ı'] = 'i',
+            ['ö'] = 'o',
+            ['ş'] = 's',
+            ['ü'] = 'u',
+            ['Ç'] = 'c',
+            ['Ğ'] = 'g',
+            ['İ'] = 'i',
+            ['Ö'] = 'o',
+            ['Ş'] = 's',
+            ['Ü'] = 'u'
+        };
+
+        var temiz = new System.Text.StringBuilder();
+        foreach (var ch in metin.Trim())
+        {
+            var c = harita.TryGetValue(ch, out var eslenik) ? eslenik : char.ToLowerInvariant(ch);
+            if (char.IsLetterOrDigit(c)) temiz.Append(c);
+            else if (c == ' ' || c == '-') temiz.Append('-');
+        }
+
+        // Ardışık tireleri tekle indir
+        var sonuc = System.Text.RegularExpressions.Regex.Replace(temiz.ToString(), "-{2,}", "-").Trim('-');
+        return string.IsNullOrEmpty(sonuc) ? "etkinlik" : sonuc;
+    }
+}

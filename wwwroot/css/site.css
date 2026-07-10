@@ -259,3 +259,16 @@ h1, h2, h3, .navbar-brand {
   margin: 0.75rem 0 0;
   white-space: pre-line;   /* kullanıcının satır sonlarını koru */
 }
+
+/* ---- Admin tablo ve rozetler ---- */
+.admin-tablo { background: #fff; border-radius: 0.5rem; overflow: hidden; }
+
+.rozet {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 1rem;
+}
+
+.rozet-yayin { background: #DFF2E1; color: #1E7B34; }
+.rozet-taslak { background: #EFEAE0; color: var(--metin-soluk); }

@@ -1,0 +1,68 @@
+﻿@model List<OrganizasyonSitesi.Models.Entities.Etkinlik>
+
+@{
+    ViewData["Title"] = "Etkinlikler";
+}
+
+<div class="container-fluid px-4 py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">Etkinlikler</h1>
+        <a asp-action="Ekle" class="btn btn-primary">+ Yeni Etkinlik</a>
+    </div>
+
+    @if (TempData["Basarili"] != null)
+    {
+        <div class="alert alert-success">@TempData["Basarili"]</div>
+    }
+
+    @if (!Model.Any())
+    {
+        <p class="text-muted">Henüz etkinlik yok. İlkini ekleyin!</p>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table admin-tablo align-middle">
+                <thead>
+                    <tr>
+                        <th>Başlık</th>
+                        <th>Hizmet</th>
+                        <th>Tarih</th>
+                        <th>Durum</th>
+                        <th class="text-end">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var e in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@e.Baslik</strong>
+                                <div class="mesaj-meta">/@e.Slug</div>
+                            </td>
+                            <td>@e.Hizmet?.Baslik</td>
+                            <td>@e.Tarih.ToString("dd.MM.yyyy")</td>
+                            <td>
+                                @if (e.YayindaMi)
+                                {
+                                    <span class="rozet rozet-yayin">Yayında</span>
+                                }
+                                else
+                                {
+                                    <span class="rozet rozet-taslak">Taslak</span>
+                                }
+                            </td>
+                            <td class="text-end">
+                                <a asp-action="Duzenle" asp-route-id="@e.Id" class="btn btn-sm btn-outline-secondary">Düzenle</a>
+                                <form asp-action="Sil" asp-route-id="@e.Id" method="post" class="d-inline"
+                                      onsubmit="return confirm('Bu etkinlik ve tüm fotoğrafları silinecek. Emin misiniz?');">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

@@ -1,0 +1,42 @@
+﻿@model EtkinlikFormViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+<input type="hidden" asp-for="Id" />
+
+<div class="mb-3">
+    <label asp-for="Baslik" class="form-label"></label>
+    <input asp-for="Baslik" class="form-control" />
+    <span asp-validation-for="Baslik" class="text-danger"></span>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label asp-for="HizmetId" class="form-label"></label>
+        <select asp-for="HizmetId" asp-items="ViewBag.Hizmetler" class="form-select">
+            <option value="">Seçiniz...</option>
+        </select>
+        <span asp-validation-for="HizmetId" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label asp-for="Tarih" class="form-label"></label>
+        <input asp-for="Tarih" class="form-control" />
+        <span asp-validation-for="Tarih" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Mekan" class="form-label"></label>
+    <input asp-for="Mekan" class="form-control" />
+</div>
+
+<div class="mb-3">
+    <label asp-for="Aciklama" class="form-label"></label>
+    <textarea asp-for="Aciklama" class="form-control" rows="5"></textarea>
+</div>
+
+<div class="mb-3 form-check">
+    <input asp-for="YayindaMi" class="form-check-input" />
+    <label asp-for="YayindaMi" class="form-check-label"></label>
+    <div class="mesaj-meta">İşaretli değilse taslak olarak kaydedilir, sitede görünmez.</div>
+</div>

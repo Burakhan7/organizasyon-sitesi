@@ -31,6 +31,22 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
+[C:/Users/Burakhan/Desktop/organizasyon/OrganizasyonSitesi/Areas/Admin/Views/Etkinlik/Duzenle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcRXRraW5saWtcRHV6ZW5sZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Burakhan/Desktop/organizasyon/OrganizasyonSitesi/Areas/Admin/Views/Etkinlik/Ekle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcRXRraW5saWtcRWtsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Burakhan/Desktop/organizasyon/OrganizasyonSitesi/Areas/Admin/Views/Etkinlik/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcRXRraW5saWtcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Burakhan/Desktop/organizasyon/OrganizasyonSitesi/Areas/Admin/Views/Etkinlik/_EtkinlikForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcRXRraW5saWtcX0V0a2lubGlrRm9ybS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Burakhan/Desktop/organizasyon/OrganizasyonSitesi/Areas/Admin/Views/Mesaj/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWVzYWpcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
