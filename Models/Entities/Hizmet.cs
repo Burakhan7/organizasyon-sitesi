@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace OrganizasyonSitesi.Models.Entities;
 
@@ -18,4 +18,12 @@ public class Hizmet
     public bool AktifMi { get; set; } = true;
 
     public int SiraNo { get; set; }
+
+    [MaxLength(160)]
+    public string? Slug { get; set; }
+
+    [MaxLength(4000)]
+    public string? DetayAciklama { get; set; }
+
+    public List<Etkinlik> Etkinlikler { get; set; } = new();
 }

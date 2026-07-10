@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+ï»¿using Microsoft.EntityFrameworkCore;
 using OrganizasyonSitesi.Models.Entities;
 
 namespace OrganizasyonSitesi.Data;
@@ -12,22 +12,41 @@ public class AppDbContext : DbContext
     public DbSet<Hizmet> Hizmetler { get; set; }
     public DbSet<Referans> Referanslar { get; set; }
     public DbSet<IletisimMesaji> IletisimMesajlari { get; set; }
+    public DbSet<Etkinlik> Etkinlikler { get; set; }
+    public DbSet<EtkinlikFotograf> EtkinlikFotograflari { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
+        // Etkinlik silinince fotoÄŸraflarÄ± da silinsin (cascade)
+        modelBuilder.Entity<EtkinlikFotograf>()
+            .HasOne(f => f.Etkinlik)
+            .WithMany(e => e.Fotograflar)
+            .HasForeignKey(f => f.EtkinlikId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Hizmet silinince etkinlikler silinMEsin (restrict): Ã¶nce etkinlikleri taÅŸÄ±/sil
+        modelBuilder.Entity<Etkinlik>()
+            .HasOne(e => e.Hizmet)
+            .WithMany(h => h.Etkinlikler)
+            .HasForeignKey(e => e.HizmetId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Slug'lar benzersiz olsun (URL Ã§akÄ±ÅŸmasÄ±n)
+        modelBuilder.Entity<Etkinlik>().HasIndex(e => e.Slug).IsUnique();
+
         modelBuilder.Entity<Hizmet>().HasData(
-            new Hizmet { Id = 1, Baslik = "Kurumsal Etkinlikler", Aciklama = "Lansman, bayi toplantısı, gala gecesi ve şirket organizasyonlarında uçtan uca planlama.", SiraNo = 1, AktifMi = true },
-            new Hizmet { Id = 2, Baslik = "Düğün Organizasyonu", Aciklama = "Nişandan kına gecesine, salon süslemesinden orkestraya hayalinizdeki düğünü kurgular, siz sadece anın tadını çıkarırsınız.", SiraNo = 2, AktifMi = true },
-            new Hizmet { Id = 3, Baslik = "Festival ve Konser", Aciklama = "Sahne kurulumu, ses-ışık sistemleri, sanatçı yönetimi ve güvenlik koordinasyonu dahil büyük ölçekli etkinlik yönetimi.", SiraNo = 3, AktifMi = true },
-            new Hizmet { Id = 4, Baslik = "Açılış ve Lansman", Aciklama = "Mağaza açılışı, ürün lansmanı ve basın etkinliklerinde markanızı en doğru şekilde sahneye koyuyoruz.", SiraNo = 4, AktifMi = true }
+            new Hizmet { Id = 1, Baslik = "Kurumsal Etkinlikler", Aciklama = "Lansman, bayi toplantÄ±sÄ±, gala gecesi ve ÅŸirket organizasyonlarÄ±nda uÃ§tan uca planlama.", SiraNo = 1, AktifMi = true },
+            new Hizmet { Id = 2, Baslik = "DÃ¼ÄŸÃ¼n Organizasyonu", Aciklama = "NiÅŸandan kÄ±na gecesine, salon sÃ¼slemesinden orkestraya hayalinizdeki dÃ¼ÄŸÃ¼nÃ¼ kurgular, siz sadece anÄ±n tadÄ±nÄ± Ã§Ä±karÄ±rsÄ±nÄ±z.", SiraNo = 2, AktifMi = true },
+            new Hizmet { Id = 3, Baslik = "Festival ve Konser", Aciklama = "Sahne kurulumu, ses-Ä±ÅŸÄ±k sistemleri, sanatÃ§Ä± yÃ¶netimi ve gÃ¼venlik koordinasyonu dahil bÃ¼yÃ¼k Ã¶lÃ§ekli etkinlik yÃ¶netimi.", SiraNo = 3, AktifMi = true },
+            new Hizmet { Id = 4, Baslik = "AÃ§Ä±lÄ±ÅŸ ve Lansman", Aciklama = "MaÄŸaza aÃ§Ä±lÄ±ÅŸÄ±, Ã¼rÃ¼n lansmanÄ± ve basÄ±n etkinliklerinde markanÄ±zÄ± en doÄŸru ÅŸekilde sahneye koyuyoruz.", SiraNo = 4, AktifMi = true }
         );
 
         modelBuilder.Entity<Referans>().HasData(
-            new Referans { Id = 1, MusteriAdi = "Yılmaz Holding", Yorum = "Bayi toplantımız kusursuz geçti, her detay düşünülmüştü.", AktifMi = true },
-            new Referans { Id = 2, MusteriAdi = "Elif & Mert", Yorum = "Düğünümüz hayal ettiğimizden de güzeldi, iyi ki sizi seçmişiz!", AktifMi = true },
-            new Referans { Id = 3, MusteriAdi = "TechNova Yazılım", Yorum = "Ürün lansmanımızda basın ve konuk yönetimi profesyonelceydi.", AktifMi = true }
+            new Referans { Id = 1, MusteriAdi = "YÄ±lmaz Holding", Yorum = "Bayi toplantÄ±mÄ±z kusursuz geÃ§ti, her detay dÃ¼ÅŸÃ¼nÃ¼lmÃ¼ÅŸtÃ¼.", AktifMi = true },
+            new Referans { Id = 2, MusteriAdi = "Elif & Mert", Yorum = "DÃ¼ÄŸÃ¼nÃ¼mÃ¼z hayal ettiÄŸimizden de gÃ¼zeldi, iyi ki sizi seÃ§miÅŸiz!", AktifMi = true },
+            new Referans { Id = 3, MusteriAdi = "TechNova YazÄ±lÄ±m", Yorum = "ÃœrÃ¼n lansmanÄ±mÄ±zda basÄ±n ve konuk yÃ¶netimi profesyonelceydi.", AktifMi = true }
         );
     }
 }
