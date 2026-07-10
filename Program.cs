@@ -2,6 +2,7 @@
 using OrganizasyonSitesi.Data;
 using OrganizasyonSitesi.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,18 @@ if (!app.Environment.IsDevelopment())
 app.UseStatusCodePagesWithReExecute("/Home/BulunamayanSayfa");
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+// Uploads için açık kayıt (MonsterASP önerisi, sigorta)
+var uploadsYolu = Path.Combine(app.Environment.WebRootPath, "uploads");
+Directory.CreateDirectory(uploadsYolu);
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(uploadsYolu),
+    RequestPath = "/uploads"
+});
+
+
 app.UseRouting();
 
 app.UseAuthentication();
