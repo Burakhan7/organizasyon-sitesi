@@ -1,0 +1,52 @@
+﻿@model List<OrganizasyonSitesi.Models.Entities.Etkinlik>
+
+@{
+    ViewData["Title"] = "Yaptığımız İşler";
+}
+
+<section class="sayfa-baslik">
+    <h1>Yaptığımız İşler</h1>
+    <p>Her etkinlik bir hikâye — işte bazıları.</p>
+</section>
+
+<section class="bolum">
+    <div class="container">
+        @if (!Model.Any())
+        {
+            <p class="text-center text-muted">Çok yakında burada etkinliklerimizi göreceksiniz.</p>
+        }
+        else
+        {
+            <div class="row g-4">
+                @foreach (var e in Model)
+                {
+                    var kapak = e.Fotograflar.FirstOrDefault();
+                    <div class="col-md-6 col-lg-4">
+                        <a asp-action="Detay" asp-route-slug="@e.Slug" class="etkinlik-kart">
+                            <div class="etkinlik-gorsel">
+                                @if (kapak != null)
+                                {
+                                    <img src="@kapak.DosyaYolu" alt="@(kapak.AltMetin ?? e.Baslik)" loading="lazy" />
+                                }
+                                else
+                                {
+                                    <div class="etkinlik-gorsel-yok">
+                                        <span>@e.Baslik.Substring(0, 1)</span>
+                                    </div>
+                                }
+                            </div>
+                            <div class="etkinlik-icerik">
+                                <span class="etkinlik-tur">@e.Hizmet?.Baslik</span>
+                                <h3>@e.Baslik</h3>
+                                <div class="mesaj-meta">
+                                    @e.Tarih.ToString("MMMM yyyy")
+                                    @if (!string.IsNullOrEmpty(e.Mekan)) { <text> · @e.Mekan</text> }
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</section>

@@ -272,3 +272,66 @@ h1, h2, h3, .navbar-brand {
 
 .rozet-yayin { background: #DFF2E1; color: #1E7B34; }
 .rozet-taslak { background: #EFEAE0; color: var(--metin-soluk); }
+
+/* ---- Etkinlik vitrin kartları ---- */
+.etkinlik-kart {
+  display: block;
+  background: #fff;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(28, 27, 46, 0.06);
+  text-decoration: none;
+  color: var(--metin);
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%;
+}
+
+.etkinlik-kart:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(28, 27, 46, 0.14);
+  color: var(--metin);
+}
+
+.etkinlik-gorsel { aspect-ratio: 3 / 2; overflow: hidden; }
+
+.etkinlik-gorsel img { width: 100%; height: 100%; object-fit: cover; }
+
+.etkinlik-gorsel-yok {
+  width: 100%; height: 100%;
+  background: var(--gece);
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(217,164,65,0.25), transparent 65%);
+  display: flex; align-items: center; justify-content: center;
+}
+
+.etkinlik-gorsel-yok span {
+  font-family: 'Marcellus', serif;
+  font-size: 3rem;
+  color: var(--altin);
+}
+
+.etkinlik-icerik { padding: 1.25rem 1.5rem; }
+
+.etkinlik-tur {
+  color: var(--altin);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.etkinlik-icerik h3 {
+  font-size: 1.25rem;
+  margin: 0.35rem 0;
+}
+
+.etkinlik-aciklama {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+.etkinlik-detay-foto {
+  width: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 12px rgba(28, 27, 46, 0.08);
+}

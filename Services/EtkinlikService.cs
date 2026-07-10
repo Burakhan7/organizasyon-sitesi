@@ -124,4 +124,25 @@ public class EtkinlikService : IEtkinlikService
         var sonuc = System.Text.RegularExpressions.Regex.Replace(temiz.ToString(), "-{2,}", "-").Trim('-');
         return string.IsNullOrEmpty(sonuc) ? "etkinlik" : sonuc;
     }
+
+    public async Task<List<Etkinlik>> YayindakileriGetirAsync()
+    {
+        return await _context.Etkinlikler
+            .Where(e => e.YayindaMi)                      // vitrin sadece yayındakileri görür
+            .Include(e => e.Hizmet)
+            .Include(e => e.Fotograflar.Where(f => f.KapakMi))  // sadece kapak fotoğrafı
+            .OrderByDescending(e => e.Tarih)
+            .AsNoTracking()
+            .ToListAsync();
+    }
+
+    public async Task<Etkinlik?> SlugIleGetirAsync(string slug)
+    {
+        return await _context.Etkinlikler
+            .Where(e => e.YayindaMi && e.Slug == slug)
+            .Include(e => e.Hizmet)
+            .Include(e => e.Fotograflar.OrderBy(f => f.SiraNo))
+            .AsNoTracking()
+            .FirstOrDefaultAsync();
+    }
 }

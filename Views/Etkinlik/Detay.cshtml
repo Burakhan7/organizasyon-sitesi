@@ -1,0 +1,47 @@
+﻿@model OrganizasyonSitesi.Models.Entities.Etkinlik
+
+@{
+    ViewData["Title"] = Model.Baslik;
+}
+
+<section class="sayfa-baslik">
+    <h1>@Model.Baslik</h1>
+    <p>
+        @Model.Hizmet?.Baslik · @Model.Tarih.ToString("MMMM yyyy")
+        @if (!string.IsNullOrEmpty(Model.Mekan)) { <text> · @Model.Mekan</text> }
+    </p>
+</section>
+
+<section class="bolum">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                @if (!string.IsNullOrEmpty(Model.Aciklama))
+                {
+                    <p class="etkinlik-aciklama">@Model.Aciklama</p>
+                }
+
+                @if (Model.Fotograflar.Any())
+                {
+                    <div class="row g-3 mt-2">
+                        @foreach (var foto in Model.Fotograflar)
+                        {
+                            <div class="col-md-6">
+                                <img src="@foto.DosyaYolu" alt="@(foto.AltMetin ?? Model.Baslik)"
+                                     class="etkinlik-detay-foto" loading="lazy" />
+                            </div>
+                        }
+                    </div>
+                }
+
+                <div class="text-center mt-5">
+                    <p class="mb-3">Benzer bir etkinlik mi planlıyorsunuz?</p>
+                    <a class="btn btn-altin" asp-controller="Iletisim" asp-action="Index">Teklif Alın</a>
+                    <div class="mt-3">
+                        <a asp-action="Index">← Tüm işlerimize dön</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -10,4 +10,6 @@ public interface IEtkinlikService
     Task EkleAsync(EtkinlikFormViewModel form);
     Task GuncelleAsync(EtkinlikFormViewModel form);
     Task SilAsync(int id);
+    Task<List<Etkinlik>> YayindakileriGetirAsync();
+    Task<Etkinlik?> SlugIleGetirAsync(string slug);
 }
