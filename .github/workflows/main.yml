@@ -1,12 +1,13 @@
 ﻿name: Build, publish and deploy to MonsterASP.NET
-        uses: rasmusbuchholdt/simply-web-deploy@2.2.0
-        with:
-          website-name: ${{ secrets.WEBSITE_NAME }}
-          server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
-          server-username: ${{ secrets.SERVER_USERNAME }}
-          server-password: ${{ secrets.SERVER_PASSWORD }}
-          skip-directory-path: '\\wwwroot\\uploads'
 on: [push]
+uses: rasmusbuchholdt/simply-web-deploy@2.2.0
+with:
+    website-name: ${{ secrets.WEBSITE_NAME }}
+    server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
+    server-username: ${{ secrets.SERVER_USERNAME }}
+    server-password: ${{ secrets.SERVER_PASSWORD }}
+    skip-directory-path: '\\wwwroot\\uploads'
+
 
 jobs:
   build_and_deploy:
