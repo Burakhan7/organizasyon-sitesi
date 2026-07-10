@@ -29,6 +29,12 @@
 							<li class="nav-item">
 								<a class="nav-link" asp-controller="Iletisim" asp-action="Index">İletişim</a>
 							</li>
+							@if (User.Identity?.IsAuthenticated == true)
+							{
+							<li class="nav-item">
+								<a class="nav-link" asp-controller="Admin" asp-action="Panel">Panel</a>
+							</li>
+							}
 						</ul>
 					</div>
 				</div>

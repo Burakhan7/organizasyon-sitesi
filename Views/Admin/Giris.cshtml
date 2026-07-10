@@ -1,0 +1,44 @@
+﻿@model OrganizasyonSitesi.Models.ViewModels.GirisViewModel
+
+@{
+    ViewData["Title"] = "Yönetici Girişi";
+}
+
+<section class="sayfa-baslik">
+    <h1>Yönetici Girişi</h1>
+</section>
+
+<section class="bolum">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <form asp-action="Giris" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" class="iletisim-form">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Sifre" class="form-label"></label>
+                        <input asp-for="Sifre" class="form-control" />
+                        <span asp-validation-for="Sifre" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input asp-for="BeniHatirla" class="form-check-input" />
+                        <label asp-for="BeniHatirla" class="form-check-label"></label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Giriş Yap</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
