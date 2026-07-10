@@ -96,4 +96,45 @@ public class EtkinlikController : Controller
         var hizmetler = await _hizmetService.AktifHizmetleriGetirAsync();
         ViewBag.Hizmetler = new SelectList(hizmetler, "Id", "Baslik");
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Fotograflar(int id)
+    {
+        var etkinlik = await _etkinlikService.GetirAsync(id);
+        if (etkinlik == null) return NotFound();
+
+        ViewBag.Etkinlik = etkinlik;
+        return View(new FotografYukleViewModel { EtkinlikId = id });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [RequestSizeLimit(30 * 1024 * 1024)]   // istek toplamı 30 MB'ı geçmesin
+    public async Task<IActionResult> Fotograflar(FotografYukleViewModel form)
+    {
+        var (basarili, hatalar) = await _etkinlikService.FotografYukleAsync(form);
+
+        if (basarili > 0)
+            TempData["Basarili"] = $"{basarili} fotoğraf yüklendi.";
+        if (hatalar.Any())
+            TempData["Hatalar"] = string.Join(" | ", hatalar);
+
+        return RedirectToAction(nameof(Fotograflar), new { id = form.EtkinlikId });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> FotografSil(int id, int etkinlikId)
+    {
+        await _etkinlikService.FotografSilAsync(id);
+        return RedirectToAction(nameof(Fotograflar), new { id = etkinlikId });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> KapakYap(int id, int etkinlikId)
+    {
+        await _etkinlikService.KapakYapAsync(id);
+        return RedirectToAction(nameof(Fotograflar), new { id = etkinlikId });
+    }
 }

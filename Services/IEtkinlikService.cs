@@ -12,4 +12,7 @@ public interface IEtkinlikService
     Task SilAsync(int id);
     Task<List<Etkinlik>> YayindakileriGetirAsync();
     Task<Etkinlik?> SlugIleGetirAsync(string slug);
+    Task<(int basarili, List<string> hatalar)> FotografYukleAsync(FotografYukleViewModel form);
+    Task FotografSilAsync(int fotografId);
+    Task KapakYapAsync(int fotografId);
 }

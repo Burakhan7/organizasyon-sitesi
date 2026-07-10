@@ -1,0 +1,79 @@
+﻿@model FotografYukleViewModel
+
+@{
+    var etkinlik = (OrganizasyonSitesi.Models.Entities.Etkinlik)ViewBag.Etkinlik;
+    ViewData["Title"] = $"Fotoğraflar - {etkinlik.Baslik}";
+}
+
+<div class="container-fluid px-4 py-4">
+    <h1 class="mb-1">Fotoğraflar</h1>
+    <p class="text-muted mb-4">@etkinlik.Baslik</p>
+
+    @if (TempData["Basarili"] != null)
+    {
+        <div class="alert alert-success">@TempData["Basarili"]</div>
+    }
+    @if (TempData["Hatalar"] != null)
+    {
+        <div class="alert alert-warning">@TempData["Hatalar"]</div>
+    }
+
+    <div class="col-lg-6 mb-5">
+        <form asp-action="Fotograflar" method="post" enctype="multipart/form-data" class="iletisim-form">
+            <input type="hidden" asp-for="EtkinlikId" />
+
+            <div class="mb-3">
+                <label asp-for="Dosyalar" class="form-label"></label>
+                <input asp-for="Dosyalar" type="file" class="form-control" multiple accept=".jpg,.jpeg,.png,.webp" />
+                <span asp-validation-for="Dosyalar" class="text-danger"></span>
+                <div class="mesaj-meta">JPG, PNG veya WebP · dosya başına en fazla 5 MB · birden fazla seçebilirsiniz</div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="AltMetin" class="form-label"></label>
+                <input asp-for="AltMetin" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Yükle</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Listeye Dön</a>
+        </form>
+    </div>
+
+    @if (etkinlik.Fotograflar.Any())
+    {
+        <div class="row g-3">
+            @foreach (var foto in etkinlik.Fotograflar.OrderBy(f => f.SiraNo))
+            {
+                <div class="col-md-4 col-lg-3">
+                    <div class="foto-kart @(foto.KapakMi ? "foto-kapak" : "")">
+                        <img src="@foto.DosyaYolu" alt="@foto.AltMetin" loading="lazy" />
+                        <div class="foto-islemler">
+                            @if (foto.KapakMi)
+                            {
+                                <span class="rozet rozet-yayin">Kapak</span>
+                            }
+                            else
+                            {
+                                <form asp-action="KapakYap" method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@foto.Id" />
+                                    <input type="hidden" name="etkinlikId" value="@etkinlik.Id" />
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">Kapak Yap</button>
+                                </form>
+                            }
+                            <form asp-action="FotografSil" method="post" class="d-inline"
+                                  onsubmit="return confirm('Fotoğraf kalıcı olarak silinecek. Emin misiniz?');">
+                                <input type="hidden" name="id" value="@foto.Id" />
+                                <input type="hidden" name="etkinlikId" value="@etkinlik.Id" />
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

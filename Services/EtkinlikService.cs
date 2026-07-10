@@ -2,16 +2,19 @@
 using OrganizasyonSitesi.Data;
 using OrganizasyonSitesi.Models.Entities;
 using OrganizasyonSitesi.Models.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 
 namespace OrganizasyonSitesi.Services;
 
 public class EtkinlikService : IEtkinlikService
 {
     private readonly AppDbContext _context;
+    private readonly IWebHostEnvironment _env;
 
-    public EtkinlikService(AppDbContext context)
+    public EtkinlikService(AppDbContext context, IWebHostEnvironment env)
     {
         _context = context;
+        _env = env;
     }
 
     public async Task<List<Etkinlik>> TumunuGetirAsync()
@@ -144,5 +147,102 @@ public class EtkinlikService : IEtkinlikService
             .Include(e => e.Fotograflar.OrderBy(f => f.SiraNo))
             .AsNoTracking()
             .FirstOrDefaultAsync();
+    }
+
+    private static readonly string[] IzinliUzantilar = { ".jpg", ".jpeg", ".png", ".webp" };
+    private const long MaksBoyut = 5 * 1024 * 1024;   // 5 MB
+
+    public async Task<(int basarili, List<string> hatalar)> FotografYukleAsync(FotografYukleViewModel form)
+    {
+        var hatalar = new List<string>();
+        var basarili = 0;
+
+        var etkinlik = await _context.Etkinlikler
+            .Include(e => e.Fotograflar)
+            .FirstOrDefaultAsync(e => e.Id == form.EtkinlikId);
+
+        if (etkinlik == null)
+        {
+            hatalar.Add("Etkinlik bulunamadı.");
+            return (0, hatalar);
+        }
+
+        var klasor = Path.Combine(_env.WebRootPath, "uploads", "etkinlikler", etkinlik.Id.ToString());
+        Directory.CreateDirectory(klasor);   // yoksa oluşturur, varsa dokunmaz
+
+        var siraNo = etkinlik.Fotograflar.Count > 0 ? etkinlik.Fotograflar.Max(f => f.SiraNo) + 1 : 1;
+
+        foreach (var dosya in form.Dosyalar)
+        {
+            // --- Validasyon zinciri ---
+            var uzanti = Path.GetExtension(dosya.FileName).ToLowerInvariant();
+
+            if (!IzinliUzantilar.Contains(uzanti))
+            {
+                hatalar.Add($"{dosya.FileName}: izin verilmeyen dosya türü.");
+                continue;
+            }
+
+            if (dosya.Length == 0 || dosya.Length > MaksBoyut)
+            {
+                hatalar.Add($"{dosya.FileName}: dosya boş veya 5 MB'den büyük.");
+                continue;
+            }
+
+            // --- Güvenli dosya adı: kullanıcının adını ASLA kullanma ---
+            var yeniAd = $"{Guid.NewGuid():N}{uzanti}";
+            var tamYol = Path.Combine(klasor, yeniAd);
+
+            using (var stream = new FileStream(tamYol, FileMode.Create))
+            {
+                await dosya.CopyToAsync(stream);
+            }
+
+            etkinlik.Fotograflar.Add(new EtkinlikFotograf
+            {
+                DosyaYolu = $"/uploads/etkinlikler/{etkinlik.Id}/{yeniAd}",
+                AltMetin = form.AltMetin,
+                SiraNo = siraNo++,
+                KapakMi = !etkinlik.Fotograflar.Any(f => f.KapakMi) && basarili == 0  // ilk fotoğraf otomatik kapak
+            });
+
+            basarili++;
+        }
+
+        if (basarili > 0)
+            await _context.SaveChangesAsync();
+
+        return (basarili, hatalar);
+    }
+
+    public async Task FotografSilAsync(int fotografId)
+    {
+        var foto = await _context.EtkinlikFotograflari.FindAsync(fotografId);
+        if (foto == null) return;
+
+        // Önce diskteki dosyayı sil
+        var fizikselYol = Path.Combine(_env.WebRootPath, foto.DosyaYolu.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
+        if (File.Exists(fizikselYol))
+            File.Delete(fizikselYol);
+
+        _context.EtkinlikFotograflari.Remove(foto);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task KapakYapAsync(int fotografId)
+    {
+        var foto = await _context.EtkinlikFotograflari.FindAsync(fotografId);
+        if (foto == null) return;
+
+        // Aynı etkinliğin diğer kapaklarını indir
+        var digerleri = await _context.EtkinlikFotograflari
+            .Where(f => f.EtkinlikId == foto.EtkinlikId && f.KapakMi)
+            .ToListAsync();
+
+        foreach (var d in digerleri)
+            d.KapakMi = false;
+
+        foto.KapakMi = true;
+        await _context.SaveChangesAsync();
     }
 }

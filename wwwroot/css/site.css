@@ -335,3 +335,24 @@ h1, h2, h3, .navbar-brand {
   border-radius: 0.5rem;
   box-shadow: 0 2px 12px rgba(28, 27, 46, 0.08);
 }
+
+/* ---- Fotoğraf yönetimi ---- */
+.foto-kart {
+  background: #fff;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(28, 27, 46, 0.06);
+  border: 2px solid transparent;
+}
+
+.foto-kapak { border-color: var(--altin); }
+
+.foto-kart img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; }
+
+.foto-islemler {
+  padding: 0.6rem;
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
