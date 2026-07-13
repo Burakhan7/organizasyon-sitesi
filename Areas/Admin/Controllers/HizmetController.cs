@@ -46,6 +46,8 @@ public class HizmetController : Controller
         var hizmet = await _hizmetService.HizmetGetirAsync(id);
         if (hizmet == null) return NotFound();
 
+        ViewBag.MevcutFotograflar = hizmet.Fotograflar;   // ← doğru yeri burası
+
         return View(new HizmetFormViewModel
         {
             Id = hizmet.Id,
@@ -81,5 +83,14 @@ public class HizmetController : Controller
             TempData["Hatalar"] = hata;
 
         return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> FotografSil(int id, int hizmetId)
+    {
+        await _hizmetService.HizmetFotografSilAsync(id);
+        TempData["Basarili"] = "Fotoğraf silindi.";
+        return RedirectToAction(nameof(Duzenle), new { id = hizmetId });
     }
 }

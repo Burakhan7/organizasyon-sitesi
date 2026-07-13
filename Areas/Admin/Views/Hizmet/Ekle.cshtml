@@ -7,7 +7,7 @@
 <div class="container-fluid px-4 py-4">
     <h1 class="mb-4">Yeni Hizmet</h1>
     <div class="col-lg-8">
-        <form asp-action="Ekle" method="post" class="iletisim-form">
+        <form asp-action="Ekle" method="post" enctype="multipart/form-data" class="iletisim-form">
             <partial name="_HizmetForm" model="Model" />
             <button type="submit" class="btn btn-primary">Kaydet</button>
             <a asp-action="Index" class="btn btn-outline-secondary">Vazgeç</a>

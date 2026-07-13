@@ -8,10 +8,12 @@ namespace OrganizasyonSitesi.Services;
 public class HizmetService : IHizmetService
 {
     private readonly AppDbContext _context;
+    private readonly IWebHostEnvironment _env;
 
-    public HizmetService(AppDbContext context)
+    public HizmetService(AppDbContext context, IWebHostEnvironment env)
     {
         _context = context;
+        _env = env;
     }
 
     public async Task<List<Hizmet>> AktifHizmetleriGetirAsync()
@@ -77,7 +79,10 @@ public class HizmetService : IHizmetService
 
     public async Task<Hizmet?> HizmetGetirAsync(int id)
     {
-        return await _context.Hizmetler.AsNoTracking().FirstOrDefaultAsync(h => h.Id == id);
+        return await _context.Hizmetler
+            .Include(h => h.Fotograflar.OrderBy(f => f.SiraNo))
+            .AsNoTracking()
+            .FirstOrDefaultAsync(h => h.Id == id);
     }
 
     public async Task HizmetEkleAsync(HizmetFormViewModel form)
@@ -94,11 +99,41 @@ public class HizmetService : IHizmetService
 
         _context.Hizmetler.Add(hizmet);
         await _context.SaveChangesAsync();
+        await FotograflariIsleAsync(hizmet, form.YeniFotograflar);
+    }
+
+    private async Task FotograflariIsleAsync(Hizmet hizmet, List<IFormFile>? dosyalar)
+    {
+        if (dosyalar == null || dosyalar.Count == 0) return;
+
+        var siraNo = hizmet.Fotograflar.Count > 0 ? hizmet.Fotograflar.Max(f => f.SiraNo) + 1 : 1;
+
+        foreach (var dosya in dosyalar)
+        {
+            var (webYolu, hata) = await FotografYardimcisi.KaydetAsync(
+                dosya, _env.WebRootPath, Path.Combine("hizmetler", hizmet.Id.ToString()));
+
+            if (webYolu != null)
+            {
+                _context.HizmetFotograflari.Add(new HizmetFotograf
+                {
+                    HizmetId = hizmet.Id,
+                    DosyaYolu = webYolu,
+                    SiraNo = siraNo++
+                });
+            }
+            // hataları şimdilik sessizce atlıyoruz; istersen tuple ile controller'a taşırsın (Etkinlik deseni)
+        }
+
+        await _context.SaveChangesAsync();
     }
 
     public async Task HizmetGuncelleAsync(HizmetFormViewModel form)
     {
-        var hizmet = await _context.Hizmetler.FindAsync(form.Id);
+        var hizmet = await _context.Hizmetler
+            .Include(h => h.Fotograflar)
+            .FirstOrDefaultAsync(h => h.Id == form.Id);
+
         if (hizmet == null) return;
 
         if (hizmet.Baslik != form.Baslik || string.IsNullOrEmpty(hizmet.Slug))
@@ -111,6 +146,8 @@ public class HizmetService : IHizmetService
         hizmet.AktifMi = form.AktifMi;
 
         await _context.SaveChangesAsync();
+
+        await FotograflariIsleAsync(hizmet, form.YeniFotograflar);
     }
 
     public async Task<(bool basarili, string? hata)> HizmetSilAsync(int id)
@@ -143,9 +180,20 @@ public class HizmetService : IHizmetService
     {
         return await _context.Hizmetler
             .Where(h => h.AktifMi && h.Slug == slug)
+            .Include(h => h.Fotograflar.OrderBy(f => f.SiraNo))
             .Include(h => h.Etkinlikler.Where(e => e.YayindaMi).OrderByDescending(e => e.Tarih))
                 .ThenInclude(e => e.Fotograflar.Where(f => f.KapakMi))
             .AsNoTracking()
             .FirstOrDefaultAsync();
+    }
+
+    public async Task HizmetFotografSilAsync(int fotografId)
+    {
+        var foto = await _context.HizmetFotograflari.FindAsync(fotografId);
+        if (foto == null) return;
+
+        FotografYardimcisi.Sil(foto.DosyaYolu, _env.WebRootPath);
+        _context.HizmetFotograflari.Remove(foto);
+        await _context.SaveChangesAsync();
     }
 }

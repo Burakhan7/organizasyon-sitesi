@@ -26,4 +26,6 @@ public class HizmetFormViewModel
 
 	[Display(Name = "Aktif (sitede görünsün)")]
 	public bool AktifMi { get; set; } = true;
+	[Display(Name = "Fotoğraf Ekle (opsiyonel, birden fazla seçilebilir)")]
+	public List<IFormFile>? YeniFotograflar { get; set; }
 }

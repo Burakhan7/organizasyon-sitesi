@@ -15,6 +15,7 @@ public class AppDbContext : IdentityDbContext
     public DbSet<IletisimMesaji> IletisimMesajlari { get; set; }
     public DbSet<Etkinlik> Etkinlikler { get; set; }
     public DbSet<EtkinlikFotograf> EtkinlikFotograflari { get; set; }
+    public DbSet<HizmetFotograf> HizmetFotograflari { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -49,5 +50,11 @@ public class AppDbContext : IdentityDbContext
             new Referans { Id = 2, MusteriAdi = "Elif & Mert", Yorum = "Düğünümüz hayal ettiğimizden de güzeldi, iyi ki sizi seçmişiz!", AktifMi = true },
             new Referans { Id = 3, MusteriAdi = "TechNova Yazılım", Yorum = "Ürün lansmanımızda basın ve konuk yönetimi profesyonelceydi.", AktifMi = true }
         );
+
+        modelBuilder.Entity<HizmetFotograf>()
+    .HasOne(f => f.Hizmet)
+    .WithMany(h => h.Fotograflar)
+    .HasForeignKey(f => f.HizmetId)
+    .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -26,4 +26,5 @@ public class Hizmet
     public string? DetayAciklama { get; set; }
 
     public List<Etkinlik> Etkinlikler { get; set; } = new();
+    public List<HizmetFotograf> Fotograflar { get; set; } = new();
 }

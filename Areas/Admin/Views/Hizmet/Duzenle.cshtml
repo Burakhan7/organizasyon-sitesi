@@ -7,13 +7,36 @@
 <div class="container-fluid px-4 py-4">
     <h1 class="mb-4">Hizmet Düzenle</h1>
     <div class="col-lg-8">
-        <form asp-action="Duzenle" method="post" class="iletisim-form">
+        <form asp-action="Duzenle" method="post" enctype="multipart/form-data" class="iletisim-form">
             <partial name="_HizmetForm" model="Model" />
             <button type="submit" class="btn btn-primary">Güncelle</button>
             <a asp-action="Index" class="btn btn-outline-secondary">Vazgeç</a>
         </form>
     </div>
 </div>
+@{ var fotolar = ViewBag.MevcutFotograflar as List<OrganizasyonSitesi.Models.Entities.HizmetFotograf>; }
+@if (fotolar != null && fotolar.Any())
+{
+<h5 class="mt-4 mb-3">Mevcut Fotoğraflar</h5>
+<div class="row g-3">
+    @foreach (var foto in fotolar.OrderBy(f => f.SiraNo))
+        {
+    <div class="col-md-4 col-lg-3">
+        <div class="foto-kart">
+            <img src="@foto.DosyaYolu" alt="@foto.AltMetin" loading="lazy" />
+            <div class="foto-islemler">
+                <form asp-action="FotografSil" method="post" class="d-inline"
+                      onsubmit="return confirm('Fotoğraf kalıcı olarak silinecek. Emin misiniz?');">
+                    <input type="hidden" name="id" value="@foto.Id" />
+                    <input type="hidden" name="hizmetId" value="@Model.Id" />
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
+                </form>
+            </div>
+        </div>
+    </div>
+        }
+</div>
+}
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
