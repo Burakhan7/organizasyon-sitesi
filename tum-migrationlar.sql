@@ -425,3 +425,40 @@ END;
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20260713104151_HizmetFotografEklendi'
+)
+BEGIN
+    CREATE TABLE [HizmetFotograflari] (
+        [Id] int NOT NULL IDENTITY,
+        [DosyaYolu] nvarchar(300) NOT NULL,
+        [AltMetin] nvarchar(200) NULL,
+        [SiraNo] int NOT NULL,
+        [HizmetId] int NOT NULL,
+        CONSTRAINT [PK_HizmetFotograflari] PRIMARY KEY ([Id]),
+        CONSTRAINT [FK_HizmetFotograflari_Hizmetler_HizmetId] FOREIGN KEY ([HizmetId]) REFERENCES [Hizmetler] ([Id]) ON DELETE CASCADE
+    );
+END;
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20260713104151_HizmetFotografEklendi'
+)
+BEGIN
+    CREATE INDEX [IX_HizmetFotograflari_HizmetId] ON [HizmetFotograflari] ([HizmetId]);
+END;
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20260713104151_HizmetFotografEklendi'
+)
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20260713104151_HizmetFotografEklendi', N'10.0.9');
+END;
+
+COMMIT;
+GO
+
