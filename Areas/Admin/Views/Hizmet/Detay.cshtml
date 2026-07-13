@@ -1,0 +1,64 @@
+﻿@model OrganizasyonSitesi.Models.Entities.Hizmet
+
+@{
+    ViewData["Title"] = Model.Baslik;
+}
+
+<section class="sayfa-baslik">
+    <h1>@Model.Baslik</h1>
+    <p>@Model.Aciklama</p>
+</section>
+
+<section class="bolum">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                @if (!string.IsNullOrEmpty(Model.DetayAciklama))
+                {
+                <p class="etkinlik-aciklama">@Model.DetayAciklama</p>
+                }
+
+                @if (Model.Etkinlikler.Any())
+                {
+                <h2 class="mt-5 mb-2 text-center">Bu Alanda Yaptıklarımız</h2>
+                <p class="bolum-alt">Gerçekleştirdiğimiz @Model.Baslik.ToLower() projelerinden örnekler</p>
+
+                <div class="row g-4">
+                    @foreach (var e in Model.Etkinlikler)
+                        {
+                            var kapak = e.Fotograflar.FirstOrDefault();
+                    <div class="col-md-6">
+                        <a asp-controller="Etkinlik" asp-action="Detay" asp-route-slug="@e.Slug" class="etkinlik-kart">
+                            <div class="etkinlik-gorsel">
+                                @if (kapak != null)
+                                        {
+                                <img src="@kapak.DosyaYolu" alt="@(kapak.AltMetin ?? e.Baslik)" loading="lazy" />
+                                        }
+                                        else
+                                        {
+                                <div class="etkinlik-gorsel-yok"><span>@e.Baslik.Substring(0, 1)</span></div>
+                                        }
+                            </div>
+                            <div class="etkinlik-icerik">
+                                <h3>@e.Baslik</h3>
+                                <div class="mesaj-meta">
+                                    @e.Tarih.ToString("MMMM yyyy")
+                                    @if (!string.IsNullOrEmpty(e.Mekan)) { <text> · @e.Mekan</text> }
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                        }
+                </div>
+                }
+
+                <div class="text-center mt-5">
+                    <p class="mb-3">@Model.Baslik için teklif almak ister misiniz?</p>
+                    <a class="btn btn-altin" asp-controller="Iletisim" asp-action="Index">Teklif Alın</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

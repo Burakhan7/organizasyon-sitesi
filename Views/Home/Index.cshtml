@@ -9,7 +9,7 @@
     <p>Kurumsal lansmanlardan düğünlere, festivallerden açılışlara — planlamayı bize bırakın, siz anın tadını çıkarın.</p>
     <a class="btn btn-altin" asp-controller="Iletisim" asp-action="Index">Teklif Alın</a>
 </section>
- 
+
 <section class="bolum">
     <div class="container">
         <h2>Hizmetlerimiz</h2>
@@ -18,10 +18,21 @@
             @foreach (var hizmet in Model.Hizmetler)
             {
                 <div class="col-md-6 col-lg-3">
-                    <div class="hizmet-kart">
-                        <h5>@hizmet.Baslik</h5>
-                        <p>@hizmet.Aciklama</p>
-                    </div>
+                    @if (!string.IsNullOrEmpty(hizmet.Slug))
+                    {
+                        <a asp-controller="Hizmet" asp-action="Detay" asp-route-slug="@hizmet.Slug" class="hizmet-kart hizmet-kart-link">
+                            <h5>@hizmet.Baslik</h5>
+                            <p>@hizmet.Aciklama</p>
+                            <span class="kart-ok">Detayları Gör →</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <div class="hizmet-kart">
+                            <h5>@hizmet.Baslik</h5>
+                            <p>@hizmet.Aciklama</p>
+                        </div>
+                    }
                 </div>
             }
         </div>

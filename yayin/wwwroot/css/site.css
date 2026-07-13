@@ -1,4 +1,4 @@
-:root {
+ï»¿:root {
   --gece: #1C1B2E;
   --gece-koyu: #141320;
   --altin: #D9A441;
@@ -86,7 +86,7 @@ h1, h2, h3, .navbar-brand {
 
 .hero .btn-altin:hover { background-color: var(--altin-acik); }
 
-/* ---- Bölümler ---- */
+/* ---- BÃ¶lÃ¼mler ---- */
 .bolum { padding: 4rem 0; }
 
 .bolum h2 {
@@ -100,7 +100,7 @@ h1, h2, h3, .navbar-brand {
   margin-bottom: 3rem;
 }
 
-/* ---- Hizmet kartlarý ---- */
+/* ---- Hizmet kartlarÄ± ---- */
 .hizmet-kart {
   background: #fff;
   border: none;
@@ -181,7 +181,7 @@ h1, h2, h3, .navbar-brand {
   font-size: 1.1rem;
 }
 
-/* ---- Sayfa baþlýðý (iç sayfalar) ---- */
+/* ---- Sayfa baÅŸlÄ±ÄŸÄ± (iÃ§ sayfalar) ---- */
 .sayfa-baslik {
   background-color: var(--gece);
   background-image: radial-gradient(ellipse at 50% 0%, rgba(217, 164, 65, 0.18), transparent 60%);
@@ -195,7 +195,7 @@ h1, h2, h3, .navbar-brand {
   margin: 0;
 }
 
-/* ---- Ýletiþim formu kartý ---- */
+/* ---- Ä°letiÅŸim formu kartÄ± ---- */
 .iletisim-form {
   background: #fff;
   border-radius: 0.5rem;

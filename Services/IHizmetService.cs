@@ -16,4 +16,5 @@ public interface IHizmetService
     Task HizmetEkleAsync(HizmetFormViewModel form);
     Task HizmetGuncelleAsync(HizmetFormViewModel form);
     Task<(bool basarili, string? hata)> HizmetSilAsync(int id);
+    Task<Hizmet?> SlugIleHizmetGetirAsync(string slug);
 }

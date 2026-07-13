@@ -356,3 +356,34 @@ h1, h2, h3, .navbar-brand {
   align-items: center;
   flex-wrap: wrap;
 }
+/* ---- Tıklanabilir hizmet kartı ---- */
+a.hizmet-kart-link {
+    display: block; /* ← kayıp kahraman: a'yı kutu yapar */
+}
+
+    a.hizmet-kart-link,
+    a.hizmet-kart-link:hover,
+    a.hizmet-kart-link * {
+        text-decoration: none;
+        color: var(--metin);
+    }
+
+        a.hizmet-kart-link p {
+            color: var(--metin-soluk);
+        }
+
+.kart-ok {
+    display: inline-block;
+    margin-top: 0.75rem;
+    color: var(--altin);
+    font-size: 0.85rem;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+a.hizmet-kart-link:hover .kart-ok {
+    opacity: 1;
+    transform: translateX(0);
+}

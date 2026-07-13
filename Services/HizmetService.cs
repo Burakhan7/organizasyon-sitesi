@@ -138,4 +138,14 @@ public class HizmetService : IHizmetService
 
         return aday;
     }
+
+    public async Task<Hizmet?> SlugIleHizmetGetirAsync(string slug)
+    {
+        return await _context.Hizmetler
+            .Where(h => h.AktifMi && h.Slug == slug)
+            .Include(h => h.Etkinlikler.Where(e => e.YayindaMi).OrderByDescending(e => e.Tarih))
+                .ThenInclude(e => e.Fotograflar.Where(f => f.KapakMi))
+            .AsNoTracking()
+            .FirstOrDefaultAsync();
+    }
 }
