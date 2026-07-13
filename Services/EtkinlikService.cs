@@ -83,7 +83,7 @@ public class EtkinlikService : IEtkinlikService
 
     private async Task<string> BenzersizSlugUretAsync(string baslik, int? haricId = null)
     {
-        var slug = SlugUret(baslik);
+        var slug = SlugYardimcisi.Uret(baslik);
         var aday = slug;
         var sayac = 2;
 
@@ -95,37 +95,6 @@ public class EtkinlikService : IEtkinlikService
         }
 
         return aday;
-    }
-
-    private static string SlugUret(string metin)
-    {
-        var harita = new Dictionary<char, char>
-        {
-            ['ç'] = 'c',
-            ['ğ'] = 'g',
-            ['ı'] = 'i',
-            ['ö'] = 'o',
-            ['ş'] = 's',
-            ['ü'] = 'u',
-            ['Ç'] = 'c',
-            ['Ğ'] = 'g',
-            ['İ'] = 'i',
-            ['Ö'] = 'o',
-            ['Ş'] = 's',
-            ['Ü'] = 'u'
-        };
-
-        var temiz = new System.Text.StringBuilder();
-        foreach (var ch in metin.Trim())
-        {
-            var c = harita.TryGetValue(ch, out var eslenik) ? eslenik : char.ToLowerInvariant(ch);
-            if (char.IsLetterOrDigit(c)) temiz.Append(c);
-            else if (c == ' ' || c == '-') temiz.Append('-');
-        }
-
-        // Ardışık tireleri tekle indir
-        var sonuc = System.Text.RegularExpressions.Regex.Replace(temiz.ToString(), "-{2,}", "-").Trim('-');
-        return string.IsNullOrEmpty(sonuc) ? "etkinlik" : sonuc;
     }
 
     public async Task<List<Etkinlik>> YayindakileriGetirAsync()

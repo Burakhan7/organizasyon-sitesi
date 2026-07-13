@@ -66,4 +66,76 @@ public class HizmetService : IHizmetService
         mesaj.OkunduMu = okundu;
         await _context.SaveChangesAsync();
     }
+
+    public async Task<List<Hizmet>> TumHizmetleriGetirAsync()
+    {
+        return await _context.Hizmetler
+            .OrderBy(h => h.SiraNo)
+            .AsNoTracking()
+            .ToListAsync();
+    }
+
+    public async Task<Hizmet?> HizmetGetirAsync(int id)
+    {
+        return await _context.Hizmetler.AsNoTracking().FirstOrDefaultAsync(h => h.Id == id);
+    }
+
+    public async Task HizmetEkleAsync(HizmetFormViewModel form)
+    {
+        var hizmet = new Hizmet
+        {
+            Baslik = form.Baslik,
+            Slug = await BenzersizHizmetSlugAsync(form.Baslik),
+            Aciklama = form.Aciklama,
+            DetayAciklama = form.DetayAciklama,
+            SiraNo = form.SiraNo,
+            AktifMi = form.AktifMi
+        };
+
+        _context.Hizmetler.Add(hizmet);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task HizmetGuncelleAsync(HizmetFormViewModel form)
+    {
+        var hizmet = await _context.Hizmetler.FindAsync(form.Id);
+        if (hizmet == null) return;
+
+        if (hizmet.Baslik != form.Baslik || string.IsNullOrEmpty(hizmet.Slug))
+            hizmet.Slug = await BenzersizHizmetSlugAsync(form.Baslik, form.Id);
+
+        hizmet.Baslik = form.Baslik;
+        hizmet.Aciklama = form.Aciklama;
+        hizmet.DetayAciklama = form.DetayAciklama;
+        hizmet.SiraNo = form.SiraNo;
+        hizmet.AktifMi = form.AktifMi;
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<(bool basarili, string? hata)> HizmetSilAsync(int id)
+    {
+        var etkinlikSayisi = await _context.Etkinlikler.CountAsync(e => e.HizmetId == id);
+        if (etkinlikSayisi > 0)
+            return (false, $"Bu hizmete bağlı {etkinlikSayisi} etkinlik var. Önce onları başka hizmete taşıyın ya da silin — veya hizmeti pasife alın.");
+
+        var hizmet = await _context.Hizmetler.FindAsync(id);
+        if (hizmet == null) return (false, "Hizmet bulunamadı.");
+
+        _context.Hizmetler.Remove(hizmet);
+        await _context.SaveChangesAsync();
+        return (true, null);
+    }
+
+    private async Task<string> BenzersizHizmetSlugAsync(string baslik, int? haricId = null)
+    {
+        var slug = SlugYardimcisi.Uret(baslik);
+        var aday = slug;
+        var sayac = 2;
+
+        while (await _context.Hizmetler.AnyAsync(h => h.Slug == aday && h.Id != haricId))
+            aday = $"{slug}-{sayac++}";
+
+        return aday;
+    }
 }

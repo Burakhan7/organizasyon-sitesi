@@ -1,0 +1,38 @@
+﻿@model HizmetFormViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+<input type="hidden" asp-for="Id" />
+
+<div class="mb-3">
+    <label asp-for="Baslik" class="form-label"></label>
+    <input asp-for="Baslik" class="form-control" />
+    <span asp-validation-for="Baslik" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Aciklama" class="form-label"></label>
+    <textarea asp-for="Aciklama" class="form-control" rows="3"></textarea>
+    <span asp-validation-for="Aciklama" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="DetayAciklama" class="form-label"></label>
+    <textarea asp-for="DetayAciklama" class="form-control" rows="6"></textarea>
+    <div class="mesaj-meta">Hizmet detay sayfasında gösterilecek uzun metin. Boş bırakılabilir.</div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label asp-for="SiraNo" class="form-label"></label>
+        <input asp-for="SiraNo" class="form-control" />
+        <span asp-validation-for="SiraNo" class="text-danger"></span>
+        <div class="mesaj-meta">Ana sayfadaki kart sıralaması — küçük numara önce gelir.</div>
+    </div>
+    <div class="col-md-6 mb-3 d-flex align-items-center">
+        <div class="form-check mt-3">
+            <input asp-for="AktifMi" class="form-check-input" />
+            <label asp-for="AktifMi" class="form-check-label"></label>
+        </div>
+    </div>
+</div>
