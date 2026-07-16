@@ -47,11 +47,62 @@
 		<main role="main">
 			@RenderBody()
 		</main>
+		<div class="balonlar" aria-label="Hızlı iletişim">
+			<a href="https://wa.me/905433947196" target="_blank" rel="noopener"
+			   class="balon balon-wp" aria-label="WhatsApp ile yazın">
+				<svg viewBox="0 0 24 24" fill="currentColor">
+					<path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.1 14.1c-.2.6-1.2 1.1-1.7 1.2-.4 0-1 .2-3.4-.7-2.8-1.2-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.4l.9 2.2c0 .2.1.3 0 .5l-.4.6-.5.5c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1.1 2.2 1.4 2.5 1.5.3.2.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.6.3 0 .1 0 .7-.2 1.3Z"/>
+				</svg>
+			</a>
+			<a href="https://instagram.com/olidaorganizasyon" target="_blank" rel="noopener"
+			   class="balon balon-ig" aria-label="Instagram'da takip edin">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<rect x="3" y="3" width="18" height="18" rx="5"/>
+					<circle cx="12" cy="12" r="4"/>
+					<circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/>
+				</svg>
+			</a>
+			<a href="mailto:info@olidaorganizasyon.com"
+			   class="balon balon-mail" aria-label="E-posta gönderin">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<rect x="3" y="5" width="18" height="14" rx="2"/>
+					<path d="m3 7 9 6 9-6"/>
+				</svg>
+			</a>
+		</div>
 
 		<footer class="site-footer">
 			<div class="container">
-				<p class="mb-1">Olida Organizasyon</p>
-				<p class="mb-0">Kurumsal etkinlikten düğüne, her anınızda yanınızdayız.</p>
+				<div class="row gy-4 text-md-start text-center">
+					<div class="col-md-4">
+						<p class="footer-marka">Olida Organizasyon</p>
+						<p class="footer-slogan">Kurumsal etkinlikten düğüne, her anınızda yanınızdayız.</p>
+					</div>
+					<div class="col-md-4">
+						<p class="footer-baslik">İletişim</p>
+						<ul class="footer-liste">
+							<li>
+								<a href="tel:+905433947196">0 543 394 71 96</a>
+							</li>
+							<li>
+								<a href="mailto:info@olidaorganizasyon.com">info@olidaorganizasyon.com</a>
+							</li>
+							<li>
+								<a href="https://instagram.com/olidaorganizasyon" target="_blank" rel="noopener">@@olidaorganizasyon</a>
+							</li>
+						</ul>
+					</div>
+					<div class="col-md-4">
+						<p class="footer-baslik">Adres</p>
+						<p class="footer-adres">
+							Esentepe, 8810/1. Sk. no:21b, 35610<br />
+							Çiğli/İzmir
+						</p>
+					</div>
+				</div>
+				<div class="footer-alt">
+					<p>© @DateTime.Now.Year Olida Organizasyon · Tüm hakları saklıdır</p>
+				</div>
 			</div>
 		</footer>
 

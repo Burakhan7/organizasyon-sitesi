@@ -168,18 +168,70 @@ h1, h2, h3, .navbar-brand {
 
 /* ---- Footer ---- */
 .site-footer {
-  background-color: var(--gece-koyu);
-  color: rgba(247, 244, 238, 0.6);
-  text-align: center;
-  padding: 2rem 0;
-  margin-top: 4rem;
+    background-color: var(--gece-koyu);
+    color: rgba(247, 244, 238, 0.65);
+    padding: 3rem 0 0;
+    margin-top: 4rem;
 }
 
-.site-footer p:first-child {
-  font-family: 'Marcellus', serif;
-  color: var(--kirik-beyaz);
-  font-size: 1.1rem;
+.footer-marka {
+    font-family: 'Marcellus', serif;
+    color: var(--kirik-beyaz);
+    font-size: 1.25rem;
+    margin-bottom: 0.4rem;
 }
+
+.footer-slogan {
+    font-size: 0.92rem;
+}
+
+.footer-baslik {
+    color: var(--altin);
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+}
+
+.footer-liste {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .footer-liste li {
+        margin-bottom: 0.45rem;
+    }
+
+    .footer-liste a {
+        color: rgba(247, 244, 238, 0.75);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+        .footer-liste a:hover {
+            color: var(--altin-acik);
+        }
+
+.footer-adres {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.footer-alt {
+    border-top: 1px solid rgba(247, 244, 238, 0.12);
+    margin-top: 2.5rem;
+    padding: 1.25rem 0;
+    text-align: center;
+}
+
+    .footer-alt p {
+        margin: 0;
+        font-size: 0.82rem;
+        color: rgba(247, 244, 238, 0.45);
+    }
 
 /* ---- Sayfa başlığı (iç sayfalar) ---- */
 .sayfa-baslik {
@@ -386,4 +438,122 @@ a.hizmet-kart-link {
 a.hizmet-kart-link:hover .kart-ok {
     opacity: 1;
     transform: translateX(0);
+}
+
+/* ---- İletişim balonları 🎈 ---- */
+.balonlar {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    z-index: 1000;
+}
+
+.balon {
+    position: relative;
+    width: 52px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gece-koyu);
+    /* balon formu: üstte geniş, altta hafif toplanan */
+    border-radius: 50% 50% 48% 48% / 55% 55% 44% 44%;
+    box-shadow: inset -6px -8px 12px rgba(0, 0, 0, 0.18), /* alt gölge: hacim */
+    inset 5px 7px 10px rgba(255, 255, 255, 0.45), /* üst parlama: lateks parlaklığı */
+    0 6px 14px rgba(28, 27, 46, 0.25);
+    animation: suzul 4s ease-in-out infinite;
+    transition: transform 0.25s ease;
+}
+
+    /* düğüm: balonun alt ucundaki minik üçgen */
+    .balon::before {
+        content: "";
+        position: absolute;
+        bottom: -7px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 8px solid;
+        border-top-color: inherit;
+    }
+
+    /* ip: düğümden sarkan hafif kıvrımlı çizgi */
+    .balon::after {
+        content: "";
+        position: absolute;
+        bottom: -26px;
+        left: 50%;
+        width: 10px;
+        height: 20px;
+        border-left: 1.5px solid rgba(28, 27, 46, 0.35);
+        border-radius: 0 0 0 80%;
+    }
+
+    .balon svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .balon:hover {
+        transform: translateY(-6px) scale(1.08);
+        animation-play-state: paused;
+    }
+
+.balon-wp {
+    background: var(--altin);
+    border-top-color: var(--altin);
+    color: var(--gece-koyu);
+}
+
+.balon-ig {
+    background: var(--gece);
+    border-top-color: var(--gece);
+    color: var(--altin-acik);
+}
+
+.balon-mail {
+    background: var(--kirik-beyaz);
+    border-top-color: var(--kirik-beyaz);
+    color: var(--gece);
+}
+
+/* her balon farklı ritimde süzülsün */
+.balon:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.balon:nth-child(2) {
+    animation-delay: 1.3s;
+}
+
+.balon:nth-child(3) {
+    animation-delay: 2.6s;
+}
+
+@keyframes suzul {
+    0%, 100% {
+        transform: translateY(0) rotate(-1.5deg);
+    }
+
+    50% {
+        transform: translateY(-5px) rotate(1.5deg);
+    }
+}
+
+/* mobilde biraz küçült, footer'a çarpmasın */
+@media (max-width: 576px) {
+    .balon {
+        width: 46px;
+        height: 53px;
+    }
+
+    .balonlar {
+        right: 0.9rem;
+        bottom: 1rem;
+        gap: 0.9rem;
+    }
 }
