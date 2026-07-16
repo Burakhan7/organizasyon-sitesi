@@ -18,4 +18,12 @@ public interface IHizmetService
     Task<(bool basarili, string? hata)> HizmetSilAsync(int id);
     Task<Hizmet?> SlugIleHizmetGetirAsync(string slug);
     Task HizmetFotografSilAsync(int fotografId);
+    Task <List<Referans>>TumReferanslariGetirAsync();
+    Task <Referans?>ReferansGetirAsync(int id);
+    Task ReferansEkleAsync(ReferansFormViewModel form);
+    Task ReferansGuncelleAsync(ReferansFormViewModel form);
+    Task ReferansSilAsync(int id);
+
+
+
 }

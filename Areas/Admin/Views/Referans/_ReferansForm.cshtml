@@ -1,0 +1,22 @@
+﻿@model ReferansFormViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+<input type="hidden" asp-for="Id" />
+
+<div class="mb-3">
+    <label asp-for="MusteriAdi" class="form-label"></label>
+    <input asp-for="MusteriAdi" class="form-control" />
+    <span asp-validation-for="MusteriAdi" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Yorum" class="form-label"></label>
+    <textarea asp-for="Yorum" class="form-control" rows="3"></textarea>
+    <span asp-validation-for="Yorum" class="text-danger"></span>
+</div>
+
+<div class="mb-3 form-check">
+    <input asp-for="AktifMi" class="form-check-input" />
+    <label asp-for="AktifMi" class="form-check-label"></label>
+</div>

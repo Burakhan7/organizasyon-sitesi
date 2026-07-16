@@ -85,6 +85,33 @@ public class HizmetService : IHizmetService
             .FirstOrDefaultAsync(h => h.Id == id);
     }
 
+    public async Task<List<Referans>> TumReferanslariGetirAsync()
+    {
+        return await _context.Referanslar
+            .AsNoTracking()
+            .ToListAsync();    
+    }
+
+    public async Task<Referans?> ReferansGetirAsync(int id)
+    {
+        return await _context.Referanslar
+            .AsNoTracking()
+            .FirstOrDefaultAsync(r => r.Id == id);
+    }
+
+    public async Task ReferansEkleAsync(ReferansFormViewModel form)
+    {
+        var referans = new Referans
+        {
+            MusteriAdi = form.MusteriAdi,
+            Yorum = form.Yorum,
+            AktifMi = form.AktifMi,
+        };
+        _context.Referanslar.Add(referans);
+        await _context.SaveChangesAsync();
+    }
+
+
     public async Task HizmetEkleAsync(HizmetFormViewModel form)
     {
         var hizmet = new Hizmet
@@ -128,6 +155,17 @@ public class HizmetService : IHizmetService
         await _context.SaveChangesAsync();
     }
 
+    public async Task ReferansGuncelleAsync(ReferansFormViewModel form)
+    {
+        var referans = await _context.Referanslar
+            .FindAsync(form.Id);
+        if (referans == null) return;
+        referans.MusteriAdi = form.MusteriAdi;
+        referans.Yorum = form.Yorum;
+        referans.AktifMi = form.AktifMi;
+        await _context.SaveChangesAsync();
+    }
+
     public async Task HizmetGuncelleAsync(HizmetFormViewModel form)
     {
         var hizmet = await _context.Hizmetler
@@ -148,6 +186,15 @@ public class HizmetService : IHizmetService
         await _context.SaveChangesAsync();
 
         await FotograflariIsleAsync(hizmet, form.YeniFotograflar);
+    }
+
+    public async Task ReferansSilAsync(int id)
+    {
+        var referans = await _context.Referanslar.FindAsync(id);
+        if (referans == null) return;
+
+        _context.Referanslar.Remove(referans);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<(bool basarili, string? hata)> HizmetSilAsync(int id)
