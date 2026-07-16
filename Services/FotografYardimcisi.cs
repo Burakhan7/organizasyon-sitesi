@@ -3,7 +3,7 @@
 public static class FotografYardimcisi
 {
     private static readonly string[] IzinliUzantilar = { ".jpg", ".jpeg", ".png", ".webp" };
-    private const long MaksBoyut = 5 * 1024 * 1024;
+    private const long MaksBoyut = 10 * 1024 * 1024;   
 
     /// <summary>Dosyayı doğrular ve diske kaydeder. Başarılıysa web yolunu, değilse hata mesajını döner.</summary>
     public static async Task<(string? webYolu, string? hata)> KaydetAsync(
@@ -16,7 +16,7 @@ public static class FotografYardimcisi
             return (null, $"{dosya.FileName}: izin verilmeyen dosya türü.");
 
         if (dosya.Length == 0 || dosya.Length > MaksBoyut)
-            return (null, $"{dosya.FileName}: dosya boş veya 5 MB'den büyük.");
+            return (null, $"{dosya.FileName}: dosya boş veya çok büyük ({dosya.Length / 1024.0 / 1024.0:F1} MB — sınır 10 MB).");
 
         var klasor = Path.Combine(webRootPath, "uploads", altKlasor);
         Directory.CreateDirectory(klasor);

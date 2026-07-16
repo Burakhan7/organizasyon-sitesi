@@ -20,4 +20,6 @@ public class HizmetController : Controller
 
         return View(hizmet);
     }
+
+
 }

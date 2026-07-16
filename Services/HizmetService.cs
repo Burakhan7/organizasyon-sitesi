@@ -112,7 +112,7 @@ public class HizmetService : IHizmetService
             .FirstOrDefaultAsync(h => h.Id == id);
     }
 
-    public async Task HizmetEkleAsync(HizmetFormViewModel form)
+    public async Task<List<string>> HizmetEkleAsync(HizmetFormViewModel form)
     {
         var hizmet = new Hizmet
         {
@@ -126,14 +126,17 @@ public class HizmetService : IHizmetService
 
         _context.Hizmetler.Add(hizmet);
         await _context.SaveChangesAsync();
-        await FotograflariIsleAsync(hizmet, form.YeniFotograflar);
+
+        return await FotograflariIsleAsync(hizmet, form.YeniFotograflar);
     }
 
-    private async Task FotograflariIsleAsync(Hizmet hizmet, List<IFormFile>? dosyalar)
+    private async Task<List<string>> FotograflariIsleAsync(Hizmet hizmet, List<IFormFile>? dosyalar)
     {
-        if (dosyalar == null || dosyalar.Count == 0) return;
+        var hatalar = new List<string>();
+        if (dosyalar == null || dosyalar.Count == 0) return hatalar;
 
         var siraNo = hizmet.Fotograflar.Count > 0 ? hizmet.Fotograflar.Max(f => f.SiraNo) + 1 : 1;
+        var eklendi = false;
 
         foreach (var dosya in dosyalar)
         {
@@ -148,11 +151,18 @@ public class HizmetService : IHizmetService
                     DosyaYolu = webYolu,
                     SiraNo = siraNo++
                 });
+                eklendi = true;
             }
-            // hataları şimdilik sessizce atlıyoruz; istersen tuple ile controller'a taşırsın (Etkinlik deseni)
+            else if (hata != null)
+            {
+                hatalar.Add(hata);
+            }
         }
 
-        await _context.SaveChangesAsync();
+        if (eklendi)
+            await _context.SaveChangesAsync();
+
+        return hatalar;
     }
 
     public async Task ReferansGuncelleAsync(ReferansFormViewModel form)
@@ -166,13 +176,13 @@ public class HizmetService : IHizmetService
         await _context.SaveChangesAsync();
     }
 
-    public async Task HizmetGuncelleAsync(HizmetFormViewModel form)
+    public async Task<List<string>> HizmetGuncelleAsync(HizmetFormViewModel form)
     {
         var hizmet = await _context.Hizmetler
             .Include(h => h.Fotograflar)
             .FirstOrDefaultAsync(h => h.Id == form.Id);
 
-        if (hizmet == null) return;
+        if (hizmet == null) return new List<string> { "Güncellenmek istenen hizmet bulunamadı." };
 
         if (hizmet.Baslik != form.Baslik || string.IsNullOrEmpty(hizmet.Slug))
             hizmet.Slug = await BenzersizHizmetSlugAsync(form.Baslik, form.Id);
@@ -185,7 +195,7 @@ public class HizmetService : IHizmetService
 
         await _context.SaveChangesAsync();
 
-        await FotograflariIsleAsync(hizmet, form.YeniFotograflar);
+        return await FotograflariIsleAsync(hizmet, form.YeniFotograflar);
     }
 
     public async Task ReferansSilAsync(int id)

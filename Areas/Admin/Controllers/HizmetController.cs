@@ -30,13 +30,18 @@ public class HizmetController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [RequestSizeLimit(100 * 1024 * 1024)]
     public async Task<IActionResult> Ekle(HizmetFormViewModel form)
     {
         if (!ModelState.IsValid)
             return View(form);
 
-        await _hizmetService.HizmetEkleAsync(form);
+        var fotoHatalari = await _hizmetService.HizmetEkleAsync(form);
+
         TempData["Basarili"] = "Hizmet eklendi.";
+        if (fotoHatalari.Any())
+            TempData["Hatalar"] = "Bazı fotoğraflar eklenemedi: " + string.Join(" | ", fotoHatalari);
+
         return RedirectToAction(nameof(Index));
     }
 
@@ -61,13 +66,18 @@ public class HizmetController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [RequestSizeLimit(100 * 1024 * 1024)]
     public async Task<IActionResult> Duzenle(HizmetFormViewModel form)
     {
         if (!ModelState.IsValid)
             return View(form);
 
-        await _hizmetService.HizmetGuncelleAsync(form);
+        var fotoHatalari = await _hizmetService.HizmetGuncelleAsync(form);
+
         TempData["Basarili"] = "Hizmet güncellendi.";
+        if (fotoHatalari.Any())
+            TempData["Hatalar"] = "Bazı fotoğraflar eklenemedi: " + string.Join(" | ", fotoHatalari);
+
         return RedirectToAction(nameof(Index));
     }
 
