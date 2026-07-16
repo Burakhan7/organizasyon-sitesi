@@ -34,3 +34,19 @@
 
     requestAnimationFrame(fizikDongusu);
 })();
+// ---- Scroll'da beliren içerik ----
+(function () {
+    const elemanlar = document.querySelectorAll('.belir');
+    if (elemanlar.length === 0) return;
+
+    const gozlemci = new IntersectionObserver(function (girdiler) {
+        girdiler.forEach(function (girdi) {
+            if (girdi.isIntersecting) {
+                girdi.target.classList.add('gorundu');
+                gozlemci.unobserve(girdi.target);   // bir kez belirdi, artık izleme
+            }
+        });
+    }, { threshold: 0.15 });   // elemanın %15'i görününce tetikle
+
+    elemanlar.forEach(function (el) { gozlemci.observe(el); });
+})();

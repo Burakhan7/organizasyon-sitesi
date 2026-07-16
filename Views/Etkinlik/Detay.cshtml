@@ -18,20 +18,20 @@
             <div class="col-lg-8">
                 @if (!string.IsNullOrEmpty(Model.Aciklama))
                 {
-                    <p class="etkinlik-aciklama">@Model.Aciklama</p>
+                <p class="etkinlik-aciklama belir">@Model.Aciklama</p>
                 }
 
                 @if (Model.Fotograflar.Any())
                 {
-                    <div class="row g-3 mt-2">
-                        @foreach (var foto in Model.Fotograflar)
+                <div class="row g-3 mt-2">
+                    @foreach (var (foto, i) in Model.Fotograflar.Select((f, index) => (f, index)))
                         {
-                            <div class="col-md-6">
-                                <img src="@foto.DosyaYolu" alt="@(foto.AltMetin ?? Model.Baslik)"
-                                     class="etkinlik-detay-foto" loading="lazy" />
-                            </div>
-                        }
+                    <div class="col-md-6 belir gecikme-@(Math.Min(i % 2, 3))">
+                        <img src="@foto.DosyaYolu" alt="@(foto.AltMetin ?? Model.Baslik)"
+                             class="etkinlik-detay-foto" loading="lazy" />
                     </div>
+                        }
+                </div>
                 }
 
                 <div class="text-center mt-5">

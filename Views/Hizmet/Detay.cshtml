@@ -16,15 +16,15 @@
 
                 @if (!string.IsNullOrEmpty(Model.DetayAciklama))
                 {
-                <p class="etkinlik-aciklama">@Model.DetayAciklama</p>
+                <p class="etkinlik-aciklama belir">@Model.DetayAciklama</p>
                 }
 
                 @if (Model.Fotograflar.Any())
                 {
                 <div class="row g-3 mt-2">
-                    @foreach (var foto in Model.Fotograflar)
+                    @foreach (var (foto, i) in Model.Fotograflar.Select((f, index) => (f, index)))
                         {
-                    <div class="col-md-6">
+                    <div class="col-md-6 belir gecikme-@(Math.Min(i % 2, 3))">
                         <img src="@foto.DosyaYolu" alt="@(foto.AltMetin ?? Model.Baslik)"
                              class="etkinlik-detay-foto" loading="lazy" />
                     </div>
@@ -34,14 +34,14 @@
 
                 @if (Model.Etkinlikler.Any())
                 {
-                <h2 class="mt-5 mb-2 text-center">Bu Alanda Yaptıklarımız</h2>
-                <p class="bolum-alt">Gerçekleştirdiğimiz projelerden örnekler</p>
+                <h2 class="mt-5 mb-2 text-center belir">Bu Alanda Yaptıklarımız</h2>
+                <p class="bolum-alt belir">Gerçekleştirdiğimiz projelerden örnekler</p>
 
                 <div class="row g-4">
-                    @foreach (var e in Model.Etkinlikler)
+                    @foreach (var (e, i) in Model.Etkinlikler.Select((eventItem, index) => (eventItem, index)))
                         {
                             var kapak = e.Fotograflar.FirstOrDefault();
-                    <div class="col-md-6">
+                    <div class="col-md-6 belir gecikme-@(Math.Min(i % 2, 3))">
                         <a asp-controller="Etkinlik" asp-action="Detay" asp-route-slug="@e.Slug" class="etkinlik-kart">
                             <div class="etkinlik-gorsel">
                                 @if (kapak != null)
