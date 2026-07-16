@@ -15,24 +15,41 @@
         <h2 class="belir">Hizmetlerimiz</h2>
 <p class="bolum-alt belir gecikme-1">Her ölçekte organizasyon için uçtan uca çözüm</p>
         <div class="row g-4">
-            @foreach (var hizmet in Model.Hizmetler)
+            @foreach (var (hizmet, i) in Model.Hizmetler.Select((h, i) => (h, i)))
             {
-                <div class="col-md-6 col-lg-3">
-                    @if (!string.IsNullOrEmpty(hizmet.Slug))
-                    {
-                        <a asp-controller="Hizmet" asp-action="Detay" asp-route-slug="@hizmet.Slug" class="hizmet-kart hizmet-kart-link">
-                            <h5>@hizmet.Baslik</h5>
-                            <p>@hizmet.Aciklama</p>
-                            <span class="kart-ok">Detayları Gör →</span>
-                        </a>
-                    }
-                    else
-                    {
-                        <div class="hizmet-kart">
-                            <h5>@hizmet.Baslik</h5>
-                            <p>@hizmet.Aciklama</p>
-                        </div>
-                    }
+                 <div class="col-md-6 col-lg-3 belir gecikme-@(Math.Min(i, 3))">
+                    @{ var kartFoto = hizmet.Fotograflar.FirstOrDefault(); }
+@if (!string.IsNullOrEmpty(hizmet.Slug))
+{
+    <a asp-controller="Hizmet" asp-action="Detay" asp-route-slug="@hizmet.Slug" class="hizmet-kart hizmet-kart-link">
+        @if (kartFoto != null)
+        {
+            <div class="hizmet-gorsel">
+                <img src="@kartFoto.DosyaYolu" alt="@hizmet.Baslik" loading="lazy" />
+            </div>
+        }
+        <div class="hizmet-govde">
+            <h5>@hizmet.Baslik</h5>
+            <p>@hizmet.Aciklama</p>
+            <span class="kart-ok">Detayları Gör →</span>
+        </div>
+    </a>
+}
+else
+{
+    <div class="hizmet-kart">
+        @if (kartFoto != null)
+        {
+            <div class="hizmet-gorsel">
+                <img src="@kartFoto.DosyaYolu" alt="@hizmet.Baslik" loading="lazy" />
+            </div>
+        }
+        <div class="hizmet-govde">
+            <h5>@hizmet.Baslik</h5>
+            <p>@hizmet.Aciklama</p>
+        </div>
+    </div>
+}
                 </div>
             }
         </div>
@@ -44,9 +61,9 @@
         <h2>Müşterilerimiz Ne Diyor?</h2>
         <p class="bolum-alt">Bizi en iyi onlar anlatır</p>
         <div class="row g-4">
-            @foreach (var referans in Model.Referanslar)
+            @foreach (var (referans, i) in Model.Referanslar.Select((r, i) => (r, i)))
             {
-                <div class="col-md-4">
+                <div class="col-md-4 belir gecikme-@(Math.Min(i, 3))">
                     <div class="referans-kart">
                         <p>"@referans.Yorum"</p>
                         <footer>— @referans.MusteriAdi</footer>

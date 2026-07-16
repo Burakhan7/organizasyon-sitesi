@@ -16,15 +16,6 @@ public class HizmetService : IHizmetService
         _env = env;
     }
 
-    public async Task<List<Hizmet>> AktifHizmetleriGetirAsync()
-    {
-        return await _context.Hizmetler
-            .Where(h => h.AktifMi)
-            .OrderBy(h => h.SiraNo)
-            .AsNoTracking()
-            .ToListAsync();
-    }
-
     public async Task<List<Referans>> AktifReferanslariGetirAsync()
     {
         return await _context.Referanslar
@@ -77,12 +68,14 @@ public class HizmetService : IHizmetService
             .ToListAsync();
     }
 
-    public async Task<Hizmet?> HizmetGetirAsync(int id)
+    public async Task<List<Hizmet>> AktifHizmetleriGetirAsync()
     {
         return await _context.Hizmetler
-            .Include(h => h.Fotograflar.OrderBy(f => f.SiraNo))
+            .Where(h => h.AktifMi)
+            .OrderBy(h => h.SiraNo)
+            .Include(h => h.Fotograflar.OrderBy(f => f.SiraNo).Take(1))
             .AsNoTracking()
-            .FirstOrDefaultAsync(h => h.Id == id);
+            .ToListAsync();
     }
 
     public async Task<List<Referans>> TumReferanslariGetirAsync()
@@ -111,6 +104,13 @@ public class HizmetService : IHizmetService
         await _context.SaveChangesAsync();
     }
 
+    public async Task<Hizmet?> HizmetGetirAsync(int id)
+    {
+        return await _context.Hizmetler
+            .Include(h => h.Fotograflar.OrderBy(f => f.SiraNo))
+            .AsNoTracking()
+            .FirstOrDefaultAsync(h => h.Id == id);
+    }
 
     public async Task HizmetEkleAsync(HizmetFormViewModel form)
     {
